@@ -7570,7 +7570,7 @@ var ErrorBoundary_ErrorBoundary = /** @class */ (function (_super) {
                 external_react_["createElement"]("br", null),
                 external_react_["createElement"]("small", null,
                     " Commit: ",
-                    "8a8f7791"));
+                    "23b2efec"));
         }
         return external_react_["Children"].only(this.props.children);
     };
@@ -10278,30 +10278,30 @@ var MenuStore_MenuStore = /** @class */ (function () {
          * @param isScrolledDown whether last scroll was downside
          */
         this.updateOnScroll = function (isScrolledDown) {
-            var step = isScrolledDown ? 1 : -1;
-            var itemIdx = _this.activeItemIdx;
-            while (true) {
-                if (itemIdx === -1 && !isScrolledDown) {
-                    break;
-                }
-                if (itemIdx >= _this.flatItems.length - 1 && isScrolledDown) {
-                    break;
-                }
-                if (isScrolledDown) {
-                    var el = _this.getElementAtOrFirstChild(itemIdx + 1);
-                    if (_this.scroll.isElementBellow(el)) {
-                        break;
-                    }
-                }
-                else {
-                    var el = _this.getElementAt(itemIdx);
-                    if (_this.scroll.isElementAbove(el)) {
-                        break;
-                    }
-                }
-                itemIdx += step;
-            }
-            _this.activate(_this.flatItems[itemIdx], true, true);
+            console.log('isScrolledDown', isScrolledDown);
+            if (isScrolledDown) { } // const step = isScrolledDown ? 1 : -1;
+            // let itemIdx = this.activeItemIdx;
+            // while (true) {
+            //   if (itemIdx === -1 && !isScrolledDown) {
+            //     break;
+            //   }
+            //   if (itemIdx >= this.flatItems.length - 1 && isScrolledDown) {
+            //     break;
+            //   }
+            //   if (isScrolledDown) {
+            //     const el = this.getElementAtOrFirstChild(itemIdx + 1);
+            //     if (this.scroll.isElementBellow(el)) {
+            //       break;
+            //     }
+            //   } else {
+            //     const el = this.getElementAt(itemIdx);
+            //     if (this.scroll.isElementAbove(el)) {
+            //       break;
+            //     }
+            //   }
+            //   itemIdx += step;
+            // }
+            // this.activate(this.flatItems[itemIdx], true, true);
         };
         /**
          * update active items on hash change
