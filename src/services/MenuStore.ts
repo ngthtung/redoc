@@ -7,7 +7,6 @@ import { ScrollService } from './ScrollService';
 
 import { flattenByProp, SECURITY_SCHEMES_SECTION_PREFIX } from '../utils';
 import { GROUP_DEPTH } from './MenuBuilder';
-import { DEFAULT_LINK } from '../components/const';
 
 export type MenuItemGroupType = 'group' | 'tag' | 'section';
 export type MenuItemType = MenuItemGroupType | 'operation';
@@ -209,6 +208,8 @@ export class MenuStore {
 
     this.deactivate(this.activeItem);
     if (!item) {
+      if (rewriteHistory) {
+      }
       // this.history.replace('', rewriteHistory);
       return;
     }
@@ -221,7 +222,7 @@ export class MenuStore {
 
     this.activeItemIdx = item.absoluteIdx!;
     if (updateLocation) {
-      this.history.replace(DEFAULT_LINK + '/' + item.id, rewriteHistory);
+      // this.history.replace(DEFAULT_LINK + '/' + item.id, rewriteHistory);
     }
 
     item.activate();

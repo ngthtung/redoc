@@ -7570,7 +7570,7 @@ var ErrorBoundary_ErrorBoundary = /** @class */ (function (_super) {
                 external_react_["createElement"]("br", null),
                 external_react_["createElement"]("small", null,
                     " Commit: ",
-                    "2bef244b"));
+                    "6ac0161b"));
         }
         return external_react_["Children"].only(this.props.children);
     };
@@ -10241,11 +10241,7 @@ var MenuBuilder_MenuBuilder = /** @class */ (function () {
 }());
 
 
-// CONCATENATED MODULE: ./src/components/const.tsx
-var DEFAULT_LINK = '/docs-api';
-
 // CONCATENATED MODULE: ./src/services/MenuStore.ts
-
 
 
 
@@ -10401,7 +10397,7 @@ var MenuStore_MenuStore = /** @class */ (function () {
         }
         this.deactivate(this.activeItem);
         if (!item) {
-            // this.history.replace('', rewriteHistory);
+            if (rewriteHistory) { } // this.history.replace('', rewriteHistory);
             return;
         } // do not allow activating group items
         // TODO: control over options
@@ -10409,8 +10405,7 @@ var MenuStore_MenuStore = /** @class */ (function () {
             return;
         }
         this.activeItemIdx = item.absoluteIdx;
-        if (updateLocation) {
-            this.history.replace(DEFAULT_LINK + '/' + item.id, rewriteHistory);
+        if (updateLocation) { // this.history.replace(DEFAULT_LINK + '/' + item.id, rewriteHistory);
         }
         item.activate();
         item.expand();
@@ -13724,6 +13719,9 @@ var Operation_Operation = /** @class */ (function (_super) {
 }(external_react_["Component"]));
 
 var Operation_templateObject_1, Operation_templateObject_2;
+
+// CONCATENATED MODULE: ./src/components/const.tsx
+var DEFAULT_LINK = '/docs-api';
 
 // CONCATENATED MODULE: ./src/components/ContentItems/ContentItems.tsx
 
