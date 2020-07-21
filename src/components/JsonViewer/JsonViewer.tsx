@@ -3,10 +3,8 @@ import styled from '../../styled-components';
 
 import { SampleControls } from '../../common-elements';
 import { CopyButtonWrapper } from '../../common-elements/CopyButtonWrapper';
-import { PrismDiv } from '../../common-elements/PrismDiv';
-import { jsonToHTML } from '../../utils/jsonToHtml';
-import { OptionsContext } from '../OptionsProvider';
 import { jsonStyles } from './style';
+import ReactJson from 'react-json-view';
 
 export interface JsonProps {
   data: any;
@@ -30,23 +28,39 @@ class Json extends React.PureComponent<JsonProps> {
     <JsonViewerWrap>
       <SampleControls>
         {renderCopyButton()}
-        <button onClick={this.expandAll}> Expand all </button>
-        <button onClick={this.collapseAll}> Collapse all </button>
+        <button onClick={this.saveAll}> Save all </button>
       </SampleControls>
-      <OptionsContext.Consumer>
-        {options => (
-          <PrismDiv
-            className={this.props.className}
-            // tslint:disable-next-line
-            ref={node => (this.node = node!)}
-            dangerouslySetInnerHTML={{
-              __html: jsonToHTML(this.props.data, options.jsonSampleExpandLevel),
-            }}
-          />
-        )}
-      </OptionsContext.Consumer>
+      <div>
+        <ReactJson
+          src={this.props.data}
+          collapsed={false}
+          theme={'bright'}
+          displayDataTypes={false}
+          enableClipboard={false}
+          groupArraysAfterLength={5}
+          iconStyle={'square'}
+          collapseStringsAfterLength={20}
+          name={false}
+          onEdit={e => {
+            console.log(e, this.props);
+          }}
+          onAdd={e => {
+            console.log(e);
+          }}
+          onDelete={e => {
+            console.log(e);
+          }}
+        />
+      </div>
     </JsonViewerWrap>
   );
+
+  saveAll = () => {
+    // const elements = this.node.getElementsByClassName('collapsible');
+    // for (const collapsed of Array.prototype.slice.call(elements)) {
+    //   console.log(elements);
+    // }
+  };
 
   expandAll = () => {
     const elements = this.node.getElementsByClassName('collapsible');
@@ -79,11 +93,11 @@ class Json extends React.PureComponent<JsonProps> {
   };
 
   componentDidMount() {
-    this.node!.addEventListener('click', this.clickListener);
+    // this.node!.addEventListener('click', this.clickListener);
   }
 
   componentWillUnmount() {
-    this.node!.removeEventListener('click', this.clickListener);
+    // this.node!.removeEventListener('click', this.clickListener);
   }
 }
 

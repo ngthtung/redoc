@@ -10,6 +10,7 @@ import { GROUP_DEPTH } from './MenuBuilder';
 
 export type MenuItemGroupType = 'group' | 'tag' | 'section';
 export type MenuItemType = MenuItemGroupType | 'operation';
+export const DEFAULT_LINK = '/docs-api';
 
 /** Generic interface for MenuItems */
 export interface IMenuItem {
@@ -220,7 +221,7 @@ export class MenuStore {
 
     this.activeItemIdx = item.absoluteIdx!;
     if (updateLocation) {
-      this.history.replace(item.id, rewriteHistory);
+      this.history.replace(DEFAULT_LINK + '/' + item.id, rewriteHistory);
     }
 
     item.activate();
@@ -254,7 +255,9 @@ export class MenuStore {
   ) {
     // item here can be a copy from search results so find corresponding item from menu
     const menuItem = (item && this.getItemById(item.id)) || item;
+    // enable click item
     this.activate(menuItem, updateLocation, rewriteHistory);
+    // jump when click item
     this.scrollToActive();
     if (!menuItem || !menuItem.items.length) {
       this.closeSidebar();

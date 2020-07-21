@@ -10,6 +10,7 @@ import { StoreBuilder } from './StoreBuilder';
 export interface RedocStandaloneProps {
   spec?: object;
   specUrl?: string;
+  defaultLink?: string;
   options?: RedocRawOptions;
   onLoaded?: (e?: Error) => any;
 }
@@ -34,18 +35,25 @@ export class RedocStandalone extends React.PureComponent<RedocStandaloneProps> {
       return null;
     },
     options: PropTypes.any,
+    defaultLink: PropTypes.string,
     onLoaded: PropTypes.any,
   };
 
   render() {
-    const { spec, specUrl, options = {}, onLoaded } = this.props;
+    const { spec, specUrl, options = {}, onLoaded, defaultLink = '/docs-apis' } = this.props;
     const hideLoading = options.hideLoading !== undefined;
 
     const normalizedOpts = new RedocNormalizedOptions(options);
 
     return (
       <ErrorBoundary>
-        <StoreBuilder spec={spec} specUrl={specUrl} options={options} onLoaded={onLoaded}>
+        <StoreBuilder
+          spec={spec}
+          specUrl={specUrl}
+          options={options}
+          onLoaded={onLoaded}
+          defaultLink={defaultLink}
+        >
           {({ loading, store }) =>
             !loading ? (
               <Redoc store={store!} />
