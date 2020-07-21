@@ -24,7 +24,7 @@ node_modules
 lib/
 stats.json
 cypress/
-bundles/
+# bundles/
 typings/*
 !typings/styled-patch.d.ts
 cli/index.js
@@ -34,5 +34,4 @@ cli/index.js
 /coverage
 .ghpages-tmp
 stats.json
-yarn.lock
 src/__tests__
