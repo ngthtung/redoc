@@ -7,10 +7,10 @@ import { ScrollService } from './ScrollService';
 
 import { flattenByProp, SECURITY_SCHEMES_SECTION_PREFIX } from '../utils';
 import { GROUP_DEPTH } from './MenuBuilder';
+import { DEFAULT_LINK } from '../components/const';
 
 export type MenuItemGroupType = 'group' | 'tag' | 'section';
 export type MenuItemType = MenuItemGroupType | 'operation';
-export const DEFAULT_LINK = '/docs-api';
 
 /** Generic interface for MenuItems */
 export interface IMenuItem {
@@ -209,7 +209,7 @@ export class MenuStore {
 
     this.deactivate(this.activeItem);
     if (!item) {
-      this.history.replace('', rewriteHistory);
+      // this.history.replace('', rewriteHistory);
       return;
     }
 

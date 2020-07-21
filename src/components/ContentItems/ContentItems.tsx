@@ -7,6 +7,7 @@ import { H1, H2, MiddlePanel, Row, Section, ShareLink } from '../../common-eleme
 import { ContentItemModel } from '../../services/MenuBuilder';
 import { GroupModel, OperationModel } from '../../services/models';
 import { Operation } from '../Operation/Operation';
+import { DEFAULT_LINK } from '../const';
 
 @observer
 export class ContentItems extends React.Component<{
@@ -67,14 +68,14 @@ const middlePanelWrap = component => <MiddlePanel compact={true}>{component}</Mi
 export class SectionItem extends React.Component<ContentItemProps> {
   render() {
     const { name, description, externalDocs, level } = this.props.item as GroupModel;
-
+    console.log(this.props);
     const Header = level === 2 ? H2 : H1;
     return (
       <>
         <Row>
           <MiddlePanel compact={false}>
             <Header>
-              <ShareLink to={this.props.item.id} />
+              <ShareLink to={DEFAULT_LINK + '/' + this.props.item.id} />
               {name}
             </Header>
           </MiddlePanel>

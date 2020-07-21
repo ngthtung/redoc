@@ -6711,7 +6711,6 @@ __webpack_require__.d(__webpack_exports__, "MDX_COMPONENT_REGEXP", function() { 
 __webpack_require__.d(__webpack_exports__, "COMPONENT_REGEXP", function() { return /* reexport */ COMPONENT_REGEXP; });
 __webpack_require__.d(__webpack_exports__, "buildComponentComment", function() { return /* reexport */ buildComponentComment; });
 __webpack_require__.d(__webpack_exports__, "MarkdownRenderer", function() { return /* reexport */ MarkdownRenderer_MarkdownRenderer; });
-__webpack_require__.d(__webpack_exports__, "DEFAULT_LINK", function() { return /* reexport */ DEFAULT_LINK; });
 __webpack_require__.d(__webpack_exports__, "SECTION_ATTR", function() { return /* reexport */ SECTION_ATTR; });
 __webpack_require__.d(__webpack_exports__, "MenuStore", function() { return /* reexport */ MenuStore_MenuStore; });
 __webpack_require__.d(__webpack_exports__, "ScrollService", function() { return /* reexport */ ScrollService_ScrollService; });
@@ -7571,7 +7570,7 @@ var ErrorBoundary_ErrorBoundary = /** @class */ (function (_super) {
                 external_react_["createElement"]("br", null),
                 external_react_["createElement"]("small", null,
                     " Commit: ",
-                    "62931f74"));
+                    "2bef244b"));
         }
         return external_react_["Children"].only(this.props.children);
     };
@@ -10242,6 +10241,9 @@ var MenuBuilder_MenuBuilder = /** @class */ (function () {
 }());
 
 
+// CONCATENATED MODULE: ./src/components/const.tsx
+var DEFAULT_LINK = '/docs-api';
+
 // CONCATENATED MODULE: ./src/services/MenuStore.ts
 
 
@@ -10249,7 +10251,7 @@ var MenuBuilder_MenuBuilder = /** @class */ (function () {
 
 
 
-var DEFAULT_LINK = '/docs-api';
+
 var SECTION_ATTR = 'data-section-id';
 /**
  * Stores all side-menu related information
@@ -10399,7 +10401,7 @@ var MenuStore_MenuStore = /** @class */ (function () {
         }
         this.deactivate(this.activeItem);
         if (!item) {
-            this.history.replace('', rewriteHistory);
+            // this.history.replace('', rewriteHistory);
             return;
         } // do not allow activating group items
         // TODO: control over options
@@ -10527,6 +10529,7 @@ var ScrollService_ScrollService = /** @class */ (function () {
         return function () { return emmiter.removeListener(ScrollService_EVENT, cb); };
     };
     ScrollService.prototype.scrollIntoView = function (element) {
+        debugger;
         if (element === null) {
             return;
         }
@@ -13730,6 +13733,7 @@ var Operation_templateObject_1, Operation_templateObject_2;
 
 
 
+
 var ContentItems_ContentItems = /** @class */ (function (_super) {
     Object(external_tslib_["__extends"])(ContentItems, _super);
     function ContentItems() {
@@ -13791,12 +13795,13 @@ var ContentItems_SectionItem = /** @class */ (function (_super) {
     }
     SectionItem.prototype.render = function () {
         var _a = this.props.item, name = _a.name, description = _a.description, externalDocs = _a.externalDocs, level = _a.level;
+        console.log(this.props);
         var Header = level === 2 ? H2 : H1;
         return external_react_["createElement"](external_react_["Fragment"], null,
             external_react_["createElement"](Row, null,
                 external_react_["createElement"](MiddlePanel, { compact: false },
                     external_react_["createElement"](Header, null,
-                        external_react_["createElement"](ShareLink, { to: this.props.item.id }),
+                        external_react_["createElement"](ShareLink, { to: DEFAULT_LINK + '/' + this.props.item.id }),
                         name))),
             external_react_["createElement"](AdvancedMarkdown_AdvancedMarkdown, { source: description || '', htmlWrap: middlePanelWrap }),
             externalDocs && external_react_["createElement"](Row, null,

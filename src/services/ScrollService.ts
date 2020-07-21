@@ -61,6 +61,7 @@ export class ScrollService {
   }
 
   scrollIntoView(element: Element | null) {
+    debugger;
     if (element === null) {
       return;
     }
