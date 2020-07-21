@@ -105,34 +105,34 @@ export class MenuStore {
    */
   updateOnScroll = (isScrolledDown: boolean): void => {
     console.log('isScrolledDown', isScrolledDown);
-    if (isScrolledDown) {
+
+    const step = isScrolledDown ? 1 : -1;
+    let itemIdx = this.activeItemIdx;
+    while (true) {
+      if (itemIdx === -1 && !isScrolledDown) {
+        break;
+      }
+
+      if (itemIdx >= this.flatItems.length - 1 && isScrolledDown) {
+        break;
+      }
+
+      if (isScrolledDown) {
+        const el = this.getElementAtOrFirstChild(itemIdx + 1);
+        if (this.scroll.isElementBellow(el)) {
+          break;
+        }
+      } else {
+        const el = this.getElementAt(itemIdx);
+        if (this.scroll.isElementAbove(el)) {
+          break;
+        }
+      }
+      itemIdx += step;
     }
-    // const step = isScrolledDown ? 1 : -1;
-    // let itemIdx = this.activeItemIdx;
-    // while (true) {
-    //   if (itemIdx === -1 && !isScrolledDown) {
-    //     break;
-    //   }
-
-    //   if (itemIdx >= this.flatItems.length - 1 && isScrolledDown) {
-    //     break;
-    //   }
-
-    //   if (isScrolledDown) {
-    //     const el = this.getElementAtOrFirstChild(itemIdx + 1);
-    //     if (this.scroll.isElementBellow(el)) {
-    //       break;
-    //     }
-    //   } else {
-    //     const el = this.getElementAt(itemIdx);
-    //     if (this.scroll.isElementAbove(el)) {
-    //       break;
-    //     }
-    //   }
-    //   itemIdx += step;
-    // }
-
-    // this.activate(this.flatItems[itemIdx], true, true);
+    if (!isScrolledDown) {
+      this.activate(this.flatItems[itemIdx], true, true);
+    }
   };
 
   /**
