@@ -10,6 +10,7 @@ export interface RedocRawOptions {
   scrollYOffset?: number | string | (() => number);
   hideHostname?: boolean | string;
   expandResponses?: string | 'all';
+  defaultLink?: string;
   requiredPropsFirst?: boolean | string;
   sortPropsAlphabetically?: boolean | string;
   noAutoAuth?: boolean | string;
@@ -70,6 +71,10 @@ export class RedocNormalizedOptions {
 
   static normalizeHideHostname(value: RedocRawOptions['hideHostname']): boolean {
     return !!value;
+  }
+
+  static normalizeString(value: RedocRawOptions['defaultLink']): string {
+    return value || '/docs-api';
   }
 
   static normalizeScrollYOffset(value: RedocRawOptions['scrollYOffset']): () => number {
@@ -164,6 +169,7 @@ export class RedocNormalizedOptions {
   showExtensions: boolean | string[];
   hideSingleRequestSampleTab: boolean;
   menuToggle: boolean;
+  defaultLink: string;
   jsonSampleExpandLevel: number;
   enumSkipQuotes: boolean;
   hideSchemaTitles: boolean;
@@ -203,6 +209,7 @@ export class RedocNormalizedOptions {
     this.scrollYOffset = RedocNormalizedOptions.normalizeScrollYOffset(raw.scrollYOffset);
     this.hideHostname = RedocNormalizedOptions.normalizeHideHostname(raw.hideHostname);
     this.expandResponses = RedocNormalizedOptions.normalizeExpandResponses(raw.expandResponses);
+    this.defaultLink = RedocNormalizedOptions.normalizeString(raw.defaultLink);
     this.requiredPropsFirst = argValueToBoolean(raw.requiredPropsFirst);
     this.sortPropsAlphabetically = argValueToBoolean(raw.sortPropsAlphabetically);
     this.noAutoAuth = argValueToBoolean(raw.noAutoAuth);

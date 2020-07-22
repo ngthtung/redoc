@@ -7,7 +7,6 @@ import { H1, H2, MiddlePanel, Row, Section, ShareLink } from '../../common-eleme
 import { ContentItemModel } from '../../services/MenuBuilder';
 import { GroupModel, OperationModel } from '../../services/models';
 import { Operation } from '../Operation/Operation';
-import { DEFAULT_LINK } from '../const';
 
 @observer
 export class ContentItems extends React.Component<{
@@ -75,7 +74,7 @@ export class SectionItem extends React.Component<ContentItemProps> {
         <Row>
           <MiddlePanel compact={false}>
             <Header>
-              <ShareLink to={DEFAULT_LINK + '/' + this.props.item.id} />
+              <ShareLink to={'/' + this.props.item.id} />
               {name}
             </Header>
           </MiddlePanel>

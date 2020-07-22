@@ -91,6 +91,10 @@ export class OpenAPIParser {
     }
   }
 
+  public getOptions() {
+    return this.options;
+  }
+
   /**
    * get spec part by JsonPointer ($ref)
    */

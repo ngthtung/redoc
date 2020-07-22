@@ -47,10 +47,7 @@ export class HistoryService {
   @bind
   @debounce
   replace(id: string | null, rewriteHistory: boolean = false) {
-    // if (!IS_BROWSER) {
-    //   return;
-    // }
-    if (IS_BROWSER) {
+    if (!IS_BROWSER) {
       return;
     }
 

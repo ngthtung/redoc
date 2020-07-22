@@ -7,12 +7,14 @@ import { ScrollService } from './ScrollService';
 
 import { flattenByProp, SECURITY_SCHEMES_SECTION_PREFIX } from '../utils';
 import { GROUP_DEPTH } from './MenuBuilder';
+import { RedocNormalizedOptions } from '.';
 
 export type MenuItemGroupType = 'group' | 'tag' | 'section';
 export type MenuItemType = MenuItemGroupType | 'operation';
 
 /** Generic interface for MenuItems */
 export interface IMenuItem {
+  options: RedocNormalizedOptions;
   id: string;
   absoluteIdx?: number;
   name: string;
@@ -104,8 +106,6 @@ export class MenuStore {
    * @param isScrolledDown whether last scroll was downside
    */
   updateOnScroll = (isScrolledDown: boolean): void => {
-    console.log('isScrolledDown', isScrolledDown);
-
     const step = isScrolledDown ? 1 : -1;
     let itemIdx = this.activeItemIdx;
     while (true) {
@@ -130,9 +130,8 @@ export class MenuStore {
       }
       itemIdx += step;
     }
-    if (!isScrolledDown) {
-      this.activate(this.flatItems[itemIdx], true, true);
-    }
+
+    this.activate(this.flatItems[itemIdx], true, true);
   };
 
   /**
@@ -208,12 +207,11 @@ export class MenuStore {
     if (item && item.type === 'group') {
       return;
     }
-
     this.deactivate(this.activeItem);
     if (!item) {
       if (rewriteHistory) {
       }
-      // this.history.replace('', rewriteHistory);
+      this.history.replace('', rewriteHistory);
       return;
     }
 
@@ -225,7 +223,7 @@ export class MenuStore {
 
     this.activeItemIdx = item.absoluteIdx!;
     if (updateLocation) {
-      // this.history.replace(DEFAULT_LINK + '/' + item.id, rewriteHistory);
+      this.history.replace(item!.options.defaultLink + '/' + item.id, rewriteHistory);
     }
 
     item.activate();

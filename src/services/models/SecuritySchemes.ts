@@ -1,12 +1,14 @@
 import { OpenAPISecurityScheme, Referenced } from '../../types';
 import { SECURITY_SCHEMES_SECTION_PREFIX } from '../../utils/openapi';
 import { OpenAPIParser } from '../OpenAPIParser';
+import { RedocNormalizedOptions } from '..';
 
 export class SecuritySchemeModel {
   id: string;
   sectionId: string;
   type: OpenAPISecurityScheme['type'];
   description: string;
+  options: RedocNormalizedOptions;
   apiKey?: {
     name: string;
     in: OpenAPISecurityScheme['in'];
@@ -24,6 +26,7 @@ export class SecuritySchemeModel {
 
   constructor(parser: OpenAPIParser, id: string, scheme: Referenced<OpenAPISecurityScheme>) {
     const info = parser.deref(scheme);
+    this.options = parser.getOptions();
     this.id = id;
     this.sectionId = SECURITY_SCHEMES_SECTION_PREFIX + id;
     this.type = info.type;

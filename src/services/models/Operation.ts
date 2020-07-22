@@ -80,11 +80,11 @@ export class OperationModel implements IMenuItem {
     private parser: OpenAPIParser,
     private operationSpec: ExtendedOpenAPIOperation,
     parent: GroupModel | undefined,
-    private options: RedocNormalizedOptions,
+    public options: RedocNormalizedOptions,
     isCallback: boolean = false,
   ) {
     this.pointer = operationSpec.pointer;
-
+    this.options = options;
     this.description = operationSpec.description;
     this.parent = parent;
     this.externalDocs = operationSpec.externalDocs;
