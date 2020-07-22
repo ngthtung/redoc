@@ -20,7 +20,6 @@ export class RequestSamples extends React.Component<RequestSamplesProps> {
   render() {
     const { operation } = this.props;
     const samples = operation.codeSamples;
-
     const hasSamples = samples.length > 0;
     const hideTabList = samples.length === 1 ? this.context.hideSingleRequestSampleTab : false;
     return (
@@ -40,7 +39,10 @@ export class RequestSamples extends React.Component<RequestSamplesProps> {
               <TabPanel key={sample.lang + '_' + (sample.label || '')}>
                 {isPayloadSample(sample) ? (
                   <div>
-                    <PayloadSamples content={sample.requestBodyContent} />
+                    <PayloadSamples
+                      content={sample.requestBodyContent}
+                      options={operation.options}
+                    />
                   </div>
                 ) : (
                   <SourceCodeWithCopy lang={sample.lang} source={sample.source} />

@@ -36,7 +36,6 @@ export interface OperationProps {
 export class Operation extends React.Component<OperationProps> {
   render() {
     const { operation } = this.props;
-
     const { name: summary, description, deprecated, externalDocs } = operation;
     const hasDescription = !!(description || externalDocs);
 

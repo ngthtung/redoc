@@ -45,7 +45,7 @@ export class RedocStandalone extends React.PureComponent<RedocStandaloneProps> {
 
     return (
       <ErrorBoundary>
-        <StoreBuilder spec={spec} specUrl={specUrl} options={options} onLoaded={onLoaded}>
+        <StoreBuilder spec={spec} specUrl={specUrl} options={options} onLoaded={onLoaded} >
           {({ loading, store }) =>
             !loading ? (
               <Redoc store={store!} />

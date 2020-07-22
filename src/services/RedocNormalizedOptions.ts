@@ -8,6 +8,7 @@ import { MDXComponentMeta } from './MarkdownRenderer';
 export interface RedocRawOptions {
   theme?: ThemeInterface;
   scrollYOffset?: number | string | (() => number);
+  onSaved?: { (): any } | any;
   hideHostname?: boolean | string;
   expandResponses?: string | 'all';
   defaultLink?: string;
@@ -89,6 +90,13 @@ export class RedocNormalizedOptions {
     return value || '/docs-api';
   }
 
+  static normalizeFunction(value: RedocRawOptions['onSaved']): any {
+    if (typeof value === 'function') {
+      return value;
+    }
+    return null;
+  }
+
   static normalizeScrollYOffset(value: RedocRawOptions['scrollYOffset']): () => number {
     // just number is not valid selector and leads to crash so checking if isNumeric here
     if (typeof value === 'string' && !isNumeric(value)) {
@@ -167,6 +175,7 @@ export class RedocNormalizedOptions {
 
   theme: ResolvedThemeInterface;
   scrollYOffset: () => number;
+  onSaved: (arg0: any) => void;
   hideHostname: boolean;
   expandResponses: { [code: string]: boolean } | 'all';
   requiredPropsFirst: boolean;
@@ -221,6 +230,7 @@ export class RedocNormalizedOptions {
     setRedocLabels(raw.labels);
 
     this.scrollYOffset = RedocNormalizedOptions.normalizeScrollYOffset(raw.scrollYOffset);
+    this.onSaved = RedocNormalizedOptions.normalizeFunction(raw.onSaved);
     this.hideHostname = RedocNormalizedOptions.normalizeHideHostname(raw.hideHostname);
     this.expandResponses = RedocNormalizedOptions.normalizeExpandResponses(raw.expandResponses);
     this.defaultLink = RedocNormalizedOptions.normalizeString(raw.defaultLink);

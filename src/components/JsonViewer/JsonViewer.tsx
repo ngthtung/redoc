@@ -5,9 +5,11 @@ import { SampleControls } from '../../common-elements';
 import { CopyButtonWrapper } from '../../common-elements/CopyButtonWrapper';
 import { jsonStyles } from './style';
 import ReactJson from 'react-json-view';
+import { RedocNormalizedOptions } from '../../services';
 
 export interface JsonProps {
   data: any;
+  options?: RedocNormalizedOptions;
   className?: string;
 }
 
@@ -17,22 +19,36 @@ const JsonViewerWrap = styled.div`
   }
 `;
 
-class Json extends React.PureComponent<JsonProps> {
+class Json extends React.PureComponent<JsonProps, any> {
   node: HTMLDivElement;
 
-  render() {
-    return <CopyButtonWrapper data={this.props.data}>{this.renderInner}</CopyButtonWrapper>;
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      data: this.props.data,
+      options: this.props.options,
+    };
   }
 
-  renderInner = ({ renderCopyButton }) => (
+  render() {
+    return (
+      <React.Fragment>
+        <CopyButtonWrapper data={this.state.data} options={this.state.options}>
+          {this.renderInner}
+        </CopyButtonWrapper>
+      </React.Fragment>
+    );
+  }
+
+  renderInner = ({ renderCopyButton, data, eventChange, onSaved }) => (
     <JsonViewerWrap>
       <SampleControls>
         {renderCopyButton()}
-        <button onClick={this.saveAll}> Save all </button>
+        <button onClick={() => onSaved()}> Save all </button>
       </SampleControls>
       <div>
         <ReactJson
-          src={this.props.data}
+          src={data}
           collapsed={false}
           theme={'bright'}
           displayDataTypes={false}
@@ -42,25 +58,18 @@ class Json extends React.PureComponent<JsonProps> {
           collapseStringsAfterLength={20}
           name={false}
           onEdit={e => {
-            console.log(e, this.props);
+            eventChange(e!.updated_src);
           }}
           onAdd={e => {
-            console.log(e);
+            eventChange(e!.updated_src);
           }}
           onDelete={e => {
-            console.log(e);
+            eventChange(e!.updated_src);
           }}
         />
       </div>
     </JsonViewerWrap>
   );
-
-  saveAll = () => {
-    // const elements = this.node.getElementsByClassName('collapsible');
-    // for (const collapsed of Array.prototype.slice.call(elements)) {
-    //   console.log(elements);
-    // }
-  };
 
   expandAll = () => {
     const elements = this.node.getElementsByClassName('collapsible');

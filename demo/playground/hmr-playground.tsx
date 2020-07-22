@@ -26,11 +26,16 @@ const specUrl =
   (userUrl && userUrl[1]) || (swagger ? 'swagger.yaml' : big ? 'big-openapi.json' : 'openapi.yaml');
 
 let store;
-const options: RedocRawOptions = { nativeScrollbars: false };
+const test = (e = null) => {
+  console.log('e', e)
+}
+const options: RedocRawOptions = {
+  nativeScrollbars: false, defaultLink: '/docs-api', onSaved: test
+};
 
 async function init() {
   const spec = await loadAndBundleSpec(specUrl);
-  store = new AppStore(spec, specUrl, options);
+  store = new AppStore(spec, specUrl, options, true);
   renderRoot({ store });
 }
 

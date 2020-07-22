@@ -11,7 +11,7 @@ import { Operation } from '../Operation/Operation';
 @observer
 export class ContentItems extends React.Component<{
   items: ContentItemModel[];
-}> {
+}, any> {
   render() {
     const items = this.props.items;
     if (items.length === 0) {

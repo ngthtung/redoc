@@ -7,9 +7,11 @@ import { MediaTypeModel } from '../../services/models';
 import { Markdown } from '../Markdown/Markdown';
 import { Example } from './Example';
 import { DropdownLabel, DropdownWrapper, NoSampleLabel } from './styled.elements';
+import { RedocNormalizedOptions } from '../../services';
 
 export interface PayloadSamplesProps {
   mediaType: MediaTypeModel;
+  options: RedocNormalizedOptions;
   renderDropdown: (props: DropdownProps) => JSX.Element;
 }
 
@@ -62,7 +64,7 @@ export class MediaTypeSamples extends React.Component<PayloadSamplesProps, Media
           </DropdownWrapper>
           <div>
             {description && <Markdown source={description} />}
-            <Example example={example} mimeType={mimeType} />
+            <Example example={example} mimeType={mimeType} options={this.props.options} />
           </div>
         </SamplesWrapper>
       );
@@ -71,7 +73,7 @@ export class MediaTypeSamples extends React.Component<PayloadSamplesProps, Media
       return (
         <SamplesWrapper>
           {example.description && <Markdown source={example.description} />}
-          <Example example={example} mimeType={mimeType} />
+          <Example example={example} mimeType={mimeType} options={this.props.options} />
         </SamplesWrapper>
       );
     }

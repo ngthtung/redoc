@@ -6,9 +6,11 @@ import { MediaContentModel } from '../../services/models';
 import { DropdownOrLabel } from '../DropdownOrLabel/DropdownOrLabel';
 import { MediaTypesSwitch } from '../MediaTypeSwitch/MediaTypesSwitch';
 import { InvertedSimpleDropdown, MimeLabel } from './styled.elements';
+import { RedocNormalizedOptions } from '../../services';
 
 export interface PayloadSamplesProps {
   content: MediaContentModel;
+  options: RedocNormalizedOptions;
 }
 
 @observer
@@ -26,6 +28,7 @@ export class PayloadSamples extends React.Component<PayloadSamplesProps> {
             key="samples"
             mediaType={mediaType}
             renderDropdown={this.renderDropdown}
+            options={this.props.options}
           />
         )}
       </MediaTypesSwitch>
