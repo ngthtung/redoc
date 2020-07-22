@@ -67,7 +67,7 @@ const middlePanelWrap = component => <MiddlePanel compact={true}>{component}</Mi
 export class SectionItem extends React.Component<ContentItemProps> {
   render() {
     const { name, description, externalDocs, level } = this.props.item as GroupModel;
-    console.log(this.props);
+
     const Header = level === 2 ? H2 : H1;
     return (
       <>
