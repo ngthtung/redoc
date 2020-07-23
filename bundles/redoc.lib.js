@@ -7591,7 +7591,7 @@ var ErrorBoundary_ErrorBoundary = /** @class */ (function (_super) {
                 external_react_["createElement"]("br", null),
                 external_react_["createElement"]("small", null,
                     " Commit: ",
-                    "0558dd54"));
+                    "ba8de530"));
         }
         return external_react_["Children"].only(this.props.children);
     };
@@ -11312,8 +11312,16 @@ var CopyButtonWrapper_CopyButtonWrapper = /** @class */ (function (_super) {
             });
         };
         _this.onSaved = function () {
-            var _a, _b;
-            (_b = (_a = _this.props) === null || _a === void 0 ? void 0 : _a.options) === null || _b === void 0 ? void 0 : _b.onSaved(_this.state.data);
+            var _a, _b, _c, _d;
+            (_b = (_a = _this.props) === null || _a === void 0 ? void 0 : _a.options) === null || _b === void 0 ? void 0 : _b.onSaved({
+                beforeData: _this.props.data,
+                afterData: _this.state.data,
+                operation: {
+                    id: (_c = _this.props.operation) === null || _c === void 0 ? void 0 : _c.id,
+                    path: (_d = _this.props.operation) === null || _d === void 0 ? void 0 : _d.path,
+                    raw: _this.props.operation
+                }
+            });
         };
         _this.copy = function () {
             var content = typeof _this.props.data === 'string' ? _this.props.data : JSON.stringify(_this.props.data, null, 2);
@@ -11431,7 +11439,7 @@ var JsonViewer_Json = /** @class */ (function (_super) {
     }
     Json.prototype.render = function () {
         return external_react_["createElement"](external_react_["Fragment"], null,
-            external_react_["createElement"](CopyButtonWrapper_CopyButtonWrapper, { data: this.state.data, options: this.state.options }, this.renderInner));
+            external_react_["createElement"](CopyButtonWrapper_CopyButtonWrapper, { data: this.state.data, options: this.state.options, operation: this.props.operation }, this.renderInner));
     };
     Json.prototype.componentDidMount = function () {
     };
@@ -11486,9 +11494,9 @@ var SourceCode_SourceCodeWithCopy = /** @class */ (function (_super) {
 
 
 function ExampleValue(_a) {
-    var value = _a.value, mimeType = _a.mimeType, options = _a.options;
+    var value = _a.value, mimeType = _a.mimeType, options = _a.options, operation = _a.operation;
     if (isJsonLike(mimeType)) {
-        return external_react_["createElement"](JsonViewer, { data: value, options: options });
+        return external_react_["createElement"](JsonViewer, { data: value, options: options, operation: operation });
     }
     else {
         if (typeof value === 'object') {
@@ -11547,16 +11555,16 @@ function useExternalExample(example, mimeType) {
 
 
 function Example(_a) {
-    var example = _a.example, mimeType = _a.mimeType, options = _a.options;
+    var example = _a.example, mimeType = _a.mimeType, options = _a.options, operation = _a.operation;
     if (example.value === undefined && example.externalValueUrl) {
-        return external_react_["createElement"](ExternalExample, { example: example, mimeType: mimeType, options: options });
+        return external_react_["createElement"](ExternalExample, { example: example, mimeType: mimeType, options: options, operation: operation });
     }
     else {
-        return external_react_["createElement"](ExampleValue, { value: example.value, mimeType: mimeType, options: options });
+        return external_react_["createElement"](ExampleValue, { value: example.value, mimeType: mimeType, options: options, operation: operation });
     }
 }
 function ExternalExample(_a) {
-    var example = _a.example, mimeType = _a.mimeType, options = _a.options;
+    var example = _a.example, mimeType = _a.mimeType, options = _a.options, operation = _a.operation;
     var value = useExternalExample(example, mimeType);
     if (value === undefined) {
         return external_react_["createElement"]("span", null, "Loading...");
@@ -11567,7 +11575,7 @@ function ExternalExample(_a) {
             external_react_["createElement"]("br", null),
             external_react_["createElement"]("a", { className: 'token string', href: example.externalValueUrl, target: "_blank", rel: "noopener noreferrer" }, example.externalValueUrl));
     }
-    return external_react_["createElement"](ExampleValue, { value: value, mimeType: mimeType, options: options });
+    return external_react_["createElement"](ExampleValue, { value: value, mimeType: mimeType, options: options, operation: operation });
 }
 
 // CONCATENATED MODULE: ./src/components/PayloadSamples/styled.elements.ts
@@ -11669,13 +11677,13 @@ var MediaTypeSamples_MediaTypeSamples = /** @class */ (function (_super) {
                     })),
                 external_react_["createElement"]("div", null,
                     description && external_react_["createElement"](Markdown_Markdown, { source: description }),
-                    external_react_["createElement"](Example, { example: example, mimeType: mimeType, options: this.props.options })));
+                    external_react_["createElement"](Example, { example: example, mimeType: mimeType, options: this.props.options, operation: this.props.operation })));
         }
         else {
             var example = examples[examplesNames[0]];
             return external_react_["createElement"](SamplesWrapper, null,
                 example.description && external_react_["createElement"](Markdown_Markdown, { source: example.description }),
-                external_react_["createElement"](Example, { example: example, mimeType: mimeType, options: this.props.options }));
+                external_react_["createElement"](Example, { example: example, mimeType: mimeType, options: this.props.options, operation: this.props.operation }));
         }
     };
     return MediaTypeSamples;
@@ -12366,7 +12374,7 @@ var SchemaDefinition_SchemaDefinition = /** @class */ (function (_super) {
                     external_react_["createElement"](Schema_Schema, { skipWriteOnly: !showWriteOnly, skipReadOnly: !showReadOnly, schema: this.mediaModel.schema })),
                 external_react_["createElement"](DarkRightPanel, null,
                     external_react_["createElement"](MediaSamplesWrap, null,
-                        external_react_["createElement"](MediaTypeSamples_MediaTypeSamples, { renderDropdown: this.renderDropdown, mediaType: this.mediaModel, options: this.props.options })))));
+                        external_react_["createElement"](MediaTypeSamples_MediaTypeSamples, { renderDropdown: this.renderDropdown, mediaType: this.mediaModel, options: this.props.options, operation: this.props.operation })))));
     };
     return SchemaDefinition;
 }(external_react_["PureComponent"]));
@@ -13649,7 +13657,7 @@ var PayloadSamples_PayloadSamples = /** @class */ (function (_super) {
         if (mimeContent === undefined) {
             return null;
         }
-        return external_react_["createElement"](MediaTypesSwitch_MediaTypesSwitch, { content: mimeContent, renderDropdown: this.renderDropdown, withLabel: true }, function (mediaType) { return external_react_["createElement"](MediaTypeSamples_MediaTypeSamples, { key: "samples", mediaType: mediaType, renderDropdown: _this.renderDropdown, options: _this.props.options }); });
+        return external_react_["createElement"](MediaTypesSwitch_MediaTypesSwitch, { content: mimeContent, renderDropdown: this.renderDropdown, withLabel: true }, function (mediaType) { return external_react_["createElement"](MediaTypeSamples_MediaTypeSamples, { key: "samples", mediaType: mediaType, renderDropdown: _this.renderDropdown, options: _this.props.options, operation: _this.props.operation }); });
     };
     PayloadSamples = Object(external_tslib_["__decorate"])([
         external_mobx_react_["observer"]
@@ -13673,6 +13681,7 @@ var RequestSamples_RequestSamples = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     RequestSamples.prototype.render = function () {
+        var _this = this;
         var operation = this.props.operation;
         var samples = operation.codeSamples;
         var hasSamples = samples.length > 0;
@@ -13682,7 +13691,7 @@ var RequestSamples_RequestSamples = /** @class */ (function (_super) {
             external_react_["createElement"](Tabs, { defaultIndex: 0 },
                 external_react_["createElement"](external_react_tabs_["TabList"], { hidden: hideTabList }, samples.map(function (sample) { return external_react_["createElement"](external_react_tabs_["Tab"], { key: sample.lang + '_' + (sample.label || '') }, sample.label !== undefined ? sample.label : sample.lang); })),
                 samples.map(function (sample) { return external_react_["createElement"](external_react_tabs_["TabPanel"], { key: sample.lang + '_' + (sample.label || '') }, isPayloadSample(sample) ? external_react_["createElement"]("div", null,
-                    external_react_["createElement"](PayloadSamples_PayloadSamples, { content: sample.requestBodyContent, options: operation.options })) : external_react_["createElement"](SourceCode_SourceCodeWithCopy, { lang: sample.lang, source: sample.source })); }))) || null;
+                    external_react_["createElement"](PayloadSamples_PayloadSamples, { content: sample.requestBodyContent, options: operation.options, operation: _this.props.operation })) : external_react_["createElement"](SourceCode_SourceCodeWithCopy, { lang: sample.lang, source: sample.source })); }))) || null;
     };
     RequestSamples.contextType = OptionsContext;
     RequestSamples = Object(external_tslib_["__decorate"])([
@@ -13714,7 +13723,7 @@ var ResponseSamples_ResponseSamples = /** @class */ (function (_super) {
                 external_react_["createElement"](external_react_tabs_["TabList"], null, responses.map(function (response) { return external_react_["createElement"](external_react_tabs_["Tab"], { className: 'tab-' + response.type, key: response.code }, response.code); })),
                 responses.map(function (response) { return external_react_["createElement"](external_react_tabs_["TabPanel"], { key: response.code },
                     external_react_["createElement"]("div", null,
-                        external_react_["createElement"](PayloadSamples_PayloadSamples, { content: response.content, options: operation.options }))); }))) || null;
+                        external_react_["createElement"](PayloadSamples_PayloadSamples, { content: response.content, options: operation.options, operation: operation }))); }))) || null;
     };
     ResponseSamples = Object(external_tslib_["__decorate"])([
         external_mobx_react_["observer"]
