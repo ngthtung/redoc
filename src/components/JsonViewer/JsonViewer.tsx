@@ -5,11 +5,12 @@ import { SampleControls } from '../../common-elements';
 import { CopyButtonWrapper } from '../../common-elements/CopyButtonWrapper';
 import { jsonStyles } from './style';
 import ReactJson from 'react-json-view';
-import { RedocNormalizedOptions } from '../../services';
+import { RedocNormalizedOptions, OperationModel } from '../../services';
 
 export interface JsonProps {
   data: any;
   options?: RedocNormalizedOptions;
+  operation: OperationModel;
   className?: string;
 }
 
@@ -33,7 +34,11 @@ class Json extends React.PureComponent<JsonProps, any> {
   render() {
     return (
       <React.Fragment>
-        <CopyButtonWrapper data={this.state.data} options={this.state.options}>
+        <CopyButtonWrapper
+          data={this.state.data}
+          options={this.state.options}
+          operation={this.props.operation}
+        >
           {this.renderInner}
         </CopyButtonWrapper>
       </React.Fragment>

@@ -4,23 +4,38 @@ import { StyledPre } from '../../common-elements/samples';
 import { ExampleModel } from '../../services/models';
 import { ExampleValue } from './ExampleValue';
 import { useExternalExample } from './exernalExampleHook';
-import { RedocNormalizedOptions } from '../../services';
+import { RedocNormalizedOptions, OperationModel } from '../../services';
 
 export interface ExampleProps {
   example: ExampleModel;
   options: RedocNormalizedOptions;
+  operation: OperationModel;
   mimeType: string;
 }
 
-export function Example({ example, mimeType, options }: ExampleProps) {
+export function Example({ example, mimeType, options, operation }: ExampleProps) {
   if (example.value === undefined && example.externalValueUrl) {
-    return <ExternalExample example={example} mimeType={mimeType} options={options} />;
+    return (
+      <ExternalExample
+        example={example}
+        mimeType={mimeType}
+        options={options}
+        operation={operation}
+      />
+    );
   } else {
-    return <ExampleValue value={example.value} mimeType={mimeType} options={options} />;
+    return (
+      <ExampleValue
+        value={example.value}
+        mimeType={mimeType}
+        options={options}
+        operation={operation}
+      />
+    );
   }
 }
 
-export function ExternalExample({ example, mimeType, options }: ExampleProps) {
+export function ExternalExample({ example, mimeType, options, operation }: ExampleProps) {
   const value = useExternalExample(example, mimeType);
 
   if (value === undefined) {
@@ -43,5 +58,5 @@ export function ExternalExample({ example, mimeType, options }: ExampleProps) {
     );
   }
 
-  return <ExampleValue value={value} mimeType={mimeType} options={options} />;
+  return <ExampleValue value={value} mimeType={mimeType} options={options} operation={operation} />;
 }

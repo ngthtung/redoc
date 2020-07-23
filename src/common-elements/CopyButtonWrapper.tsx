@@ -2,11 +2,12 @@ import * as React from 'react';
 import { Tooltip } from '../common-elements/Tooltip';
 
 import { ClipboardService } from '../services/ClipboardService';
-import { RedocNormalizedOptions } from '../services';
+import { RedocNormalizedOptions, OperationModel } from '../services';
 
 export interface CopyButtonWrapperProps {
   data: any;
   options?: RedocNormalizedOptions;
+  operation?: OperationModel;
   children: (props: {
     renderCopyButton: () => React.ReactNode;
     data: any;
@@ -34,7 +35,15 @@ export class CopyButtonWrapper extends React.PureComponent<
   };
 
   onSaved = () => {
-    this.props?.options?.onSaved(this.state.data);
+    this.props?.options?.onSaved({
+      beforeData: this.props.data,
+      afterData: this.state.data,
+      operation: {
+        id: this.props.operation?.id,
+        path: this.props.operation?.path,
+        raw: this.props.operation,
+      },
+    });
   };
 
   render() {

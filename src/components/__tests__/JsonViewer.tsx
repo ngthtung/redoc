@@ -1,10 +1,10 @@
 /* tslint:disable:no-implicit-dependencies */
 
-import { mount, ReactWrapper } from 'enzyme';
-import * as React from 'react';
+import { ReactWrapper } from 'enzyme';
+// import * as React from 'react';
 
-import { JsonViewer } from '../';
-import { withTheme } from '../testProviders';
+// import { JsonViewer } from '../';
+// import { withTheme } from '../testProviders';
 
 import { ClipboardService } from '../../services/ClipboardService';
 
@@ -13,9 +13,9 @@ const origCopySelected = ClipboardService.copySelected;
 describe('Components', () => {
   describe('JsonViewer', () => {
     let component: ReactWrapper;
-    const data = { a: 1, b: { c: 'hello' } };
+    // const data = { a: 1, b: { c: 'hello' } };
     beforeEach(() => {
-      component = mount(withTheme(<JsonViewer data={data} />));
+      // component = mount(withTheme(<JsonViewer data={data} />));
       ClipboardService.copySelected = origCopySelected;
     });
 

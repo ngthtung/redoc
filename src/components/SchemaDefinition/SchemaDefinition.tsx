@@ -1,7 +1,12 @@
 import * as React from 'react';
 
 import { DarkRightPanel, MiddlePanel, MimeLabel, Row, Section } from '../../common-elements';
-import { MediaTypeModel, OpenAPIParser, RedocNormalizedOptions } from '../../services';
+import {
+  MediaTypeModel,
+  OpenAPIParser,
+  RedocNormalizedOptions,
+  OperationModel,
+} from '../../services';
 import styled from '../../styled-components';
 import { OpenAPIMediaType } from '../../types';
 import { DropdownOrLabel } from '../DropdownOrLabel/DropdownOrLabel';
@@ -16,6 +21,7 @@ export interface ObjectDescriptionProps {
   showWriteOnly?: boolean;
   parser: OpenAPIParser;
   options: RedocNormalizedOptions;
+  operation: OperationModel;
 }
 
 export class SchemaDefinition extends React.PureComponent<ObjectDescriptionProps> {
@@ -70,6 +76,7 @@ export class SchemaDefinition extends React.PureComponent<ObjectDescriptionProps
                 renderDropdown={this.renderDropdown}
                 mediaType={this.mediaModel}
                 options={this.props.options}
+                operation={this.props.operation}
               />
             </MediaSamplesWrap>
           </DarkRightPanel>
