@@ -1,0 +1,1017 @@
+{
+  "_id": {
+    "$oid": "5f1907879f235b036412cd58"
+  },
+  "swagger": "2.0",
+  "info": {
+    "contact": {
+      "name": "ITService"
+    },
+    "description": "Description of ITService RESTful API.\nLast update: Jul. 9, 2020\\n\"\n\n# Authentication\nPetstore offers two forms of authentication:\n  - API Key\n  - OAuth2\nOAuth2 - an open protocol to allow secure authorization in a simple\nand standard method from web, mobile and desktop applications.\n\n# Status Code\n\n Error Code | Meaning\n---------- | -------\n400 | Bad Request -- Your request is invalid.\n401 | Unauthorized -- Your API key is wrong.\n404 | Not Found\n405 | Method Not Allowed -- You tried to access a kitten with an invalid method.\n406 | Not Acceptable -- You requested a format that isn't json.\n429 | Too Many Requests! Slow down!\n500 | Internal Server Error -- We had a problem with our server. Try again later.\n503 | Service Unavailable -- We're temporarily offline for maintenance. Please try again later.\n",
+    "title": "ITService",
+    "version": "1.0.0",
+    "x-logo": {
+      "url": "https://cmdb-api-stag.vng.com.vn/api/config/v1/image/company_logo?t=1594290219929",
+      "backgroundColor": "#29363d",
+    },
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "in": "query",
+      "name": "access_token",
+      "type": "apiKey"
+    },
+    "instagram_auth": {
+      "authorizationUrl": "https://instagram.com/oauth/authorize/",
+      "flow": "implicit",
+      "scopes": {
+        "basic": "to read a user's profile info and media (granted by default)",
+        "comments": "to post and delete comments on a user's behalf",
+        "follower_list": "to read the list of followers and followed-by users",
+        "likes": "to like and unlike media on a user's behalf",
+        "public_content": "to read any public profile info and media on a userâ€™s behalf",
+        "relationships": "to follow and unfollow accounts on a user's behalf",
+      },
+      "type": "oauth2",
+    },
+  },
+  "host": "api_sdk.vng.com.vn:8443",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/itsm/v1/tung_raw": {
+      "get": {
+        "_id": {
+          "$oid": "5f1941969f235b036412cd5b"
+        },
+        "code": "get-/api/itsm/v1/tung_raw",
+        "summary": "GET",
+        "operationId": "get-tung_raw",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request -- Your request is invalid.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+          "500": {
+            "description": "Internal Server Error -- We had a problem with our server. Try again later.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+        },
+        "deleted": false,
+        "enabled": true,
+        "type": "api",
+        "config_collection": "documentation_apis",
+        "tags": [
+          "tung_raw"
+        ],
+      },
+      "post": {
+        "_id": {
+          "$oid": "5f1947d19f235b036412cd5c"
+        },
+        "summary": "POST",
+        "operationId": "post-tung_raw",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": "false",
+            "default": "Bearer {token}",
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": null,
+            "required": true,
+          },
+          {
+            "in": "body",
+            "name": "Body",
+            "description": null,
+            "required": "true",
+            "schema": {
+              "properties": {
+                "qwe": {
+                  "type": "string",
+                  "example": "d",
+                  "description": "qwe",
+                },
+                "name": {
+                  "type": "string",
+                  "example": "",
+                  "description": "123",
+                },
+                "code": {
+                  "type": "string",
+                  "example": "",
+                  "description": "321",
+                },
+                "color": {
+                  "type": "string",
+                  "example": "",
+                  "description": null,
+                },
+                "description": {
+                  "type": "string",
+                  "example": "tung-test",
+                  "description": "1",
+                },
+                "tags": {
+                  "type": "tags",
+                  "example": "",
+                  "description": null,
+                },
+                "created_at": {
+                  "type": "timestamp",
+                  "description": null
+                },
+                "created_by": {
+                  "type": "reference",
+                  "description": null
+                },
+                "updated_at": {
+                  "type": "timestamp",
+                  "description": null
+                },
+                "updated_by": {
+                  "type": "reference",
+                  "description": null
+                },
+                "deleted_at": {
+                  "type": "timestamp",
+                  "description": null
+                },
+                "deleted_by": {
+                  "type": "reference",
+                  "description": null
+                },
+                "locked_at": {
+                  "type": "timestamp",
+                  "description": null
+                },
+                "locked_by": {
+                  "type": "reference",
+                  "description": null
+                },
+                "status": {
+                  "type": "reference",
+                  "example": "",
+                  "description": null,
+                },
+              },
+              "updated_by": "5def47c09ab72603bc39233e",
+              "updated_at": 1595822884,
+              "locked_by": null,
+            },
+          },
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request -- Your request is invalid.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+          "500": {
+            "description": "Internal Server Error -- We had a problem with our server. Try again later.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+        },
+        "code": "post-/api/itsm/v1/tung_raw",
+        "deleted": false,
+        "enabled": true,
+        "type": "api",
+        "config_collection": "documentation_apis",
+        "tags": [
+          "tung_raw"
+        ],
+      },
+    },
+    "/api/itsm/v1/raw_test": {
+      "get": {
+        "_id": {
+          "$oid": "5f1a97ccbff23760962e88f5"
+        },
+        "summary": "GET",
+        "operationId": "get-raw_test",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request -- Your request is invalid.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+          "500": {
+            "description": "Internal Server Error -- We had a problem with our server. Try again later.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+        },
+        "code": "get-/api/itsm/v1/raw_test",
+        "type": "api",
+        "config_collection": "documentation_apis",
+        "created_at": 1595578316,
+        "updated_at": 1595580342,
+        "mod_count": 6,
+        "enabled": true,
+        "deleted": false,
+        "locked_by": null,
+        "updated_by": "5def47c09ab72603bc39233e",
+        "tags": [
+          "raw_test"
+        ],
+      },
+      "post": {
+        "_id": {
+          "$oid": "5f1a97cabff23760962e88f1"
+        },
+        "summary": "POST",
+        "operationId": "post-raw_test",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": "false",
+            "default": "Bearer {token}",
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": null,
+            "required": true,
+          },
+          {
+            "in": "body",
+            "name": "Body",
+            "description": null,
+            "required": "true",
+            "schema": {
+              "properties": {
+                "dddd": {
+                  "type": "string",
+                  "example": "",
+                  "description": null,
+                },
+                "name": {
+                  "type": "string",
+                  "example": "",
+                  "description": "123",
+                },
+                "code": {
+                  "type": "string",
+                  "example": "",
+                  "description": "321",
+                },
+                "color": {
+                  "type": "string",
+                  "example": "",
+                  "description": null,
+                },
+                "description": {
+                  "type": "string",
+                  "example": "",
+                  "description": "1",
+                },
+                "tags": {
+                  "type": "tags",
+                  "example": "",
+                  "description": null,
+                },
+                "created_at": {
+                  "type": "timestamp",
+                  "example": "",
+                  "description": null,
+                },
+                "created_by": {
+                  "type": "reference",
+                  "example": "",
+                  "description": null,
+                },
+                "updated_at": {
+                  "type": "timestamp",
+                  "example": "",
+                  "description": null,
+                },
+                "updated_by": {
+                  "type": "reference",
+                  "example": "",
+                  "description": null,
+                },
+                "deleted_at": {
+                  "type": "timestamp",
+                  "example": "",
+                  "description": null,
+                },
+                "deleted_by": {
+                  "type": "reference",
+                  "example": "",
+                  "description": null,
+                },
+                "locked_at": {
+                  "type": "timestamp",
+                  "example": "",
+                  "description": null,
+                },
+                "locked_by": {
+                  "type": "reference",
+                  "example": "",
+                  "description": null,
+                },
+                "status": {
+                  "type": "reference",
+                  "example": "",
+                  "description": null,
+                },
+              },
+              "created_at": 1595578312,
+              "updated_at": 1595580342,
+              "locked_by": null,
+              "updated_by": "5def47c09ab72603bc39233e",
+            },
+          },
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request -- Your request is invalid.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+          "500": {
+            "description": "Internal Server Error -- We had a problem with our server. Try again later.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+        },
+        "code": "post-/api/itsm/v1/raw_test",
+        "type": "api",
+        "config_collection": "documentation_apis",
+        "created_at": 1595578314,
+        "updated_at": 1595580342,
+        "mod_count": 6,
+        "enabled": true,
+        "deleted": false,
+        "locked_by": null,
+        "updated_by": "5def47c09ab72603bc39233e",
+        "tags": [
+          "raw_test"
+        ],
+      },
+    },
+    "/api/itsm/v1/raw_test/{id}": {
+      "put": {
+        "_id": {
+          "$oid": "5f1a97cbbff23760962e88f3"
+        },
+        "summary": "PUT",
+        "operationId": "put-raw_test",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": "false",
+            "default": "Bearer {token}",
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": null,
+            "required": true,
+          },
+          {
+            "in": "body",
+            "name": "Body",
+            "description": null,
+            "required": "true",
+            "schema": {
+              "properties": {
+                "dddd": {
+                  "type": "string",
+                  "example": "",
+                  "description": null,
+                },
+                "name": {
+                  "type": "string",
+                  "example": "",
+                  "description": "123",
+                },
+                "code": {
+                  "type": "string",
+                  "example": "",
+                  "description": "321",
+                },
+                "color": {
+                  "type": "string",
+                  "example": "",
+                  "description": null,
+                },
+                "description": {
+                  "type": "string",
+                  "example": "",
+                  "description": "1",
+                },
+                "tags": {
+                  "type": "tags",
+                  "example": "",
+                  "description": null,
+                },
+                "created_at": {
+                  "type": "timestamp",
+                  "example": "",
+                  "description": null,
+                },
+                "created_by": {
+                  "type": "reference",
+                  "example": "",
+                  "description": null,
+                },
+                "updated_at": {
+                  "type": "timestamp",
+                  "example": "",
+                  "description": null,
+                },
+                "updated_by": {
+                  "type": "reference",
+                  "example": "",
+                  "description": null,
+                },
+                "deleted_at": {
+                  "type": "timestamp",
+                  "example": "",
+                  "description": null,
+                },
+                "deleted_by": {
+                  "type": "reference",
+                  "example": "",
+                  "description": null,
+                },
+                "locked_at": {
+                  "type": "timestamp",
+                  "example": "",
+                  "description": null,
+                },
+                "locked_by": {
+                  "type": "reference",
+                  "example": "",
+                  "description": null,
+                },
+                "status": {
+                  "type": "reference",
+                  "example": "",
+                  "description": null,
+                },
+              },
+              "created_at": 1595578312,
+              "updated_at": 1595580342,
+              "locked_by": null,
+              "updated_by": "5def47c09ab72603bc39233e",
+            },
+          },
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request -- Your request is invalid.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+          "500": {
+            "description": "Internal Server Error -- We had a problem with our server. Try again later.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+        },
+        "code": "put-/api/itsm/v1/raw_test",
+        "type": "api",
+        "config_collection": "documentation_apis",
+        "created_at": 1595578315,
+        "updated_at": 1595580342,
+        "mod_count": 6,
+        "enabled": true,
+        "deleted": false,
+        "locked_by": null,
+        "updated_by": "5def47c09ab72603bc39233e",
+        "tags": [
+          "raw_test"
+        ],
+      },
+      "delete": {
+        "_id": {
+          "$oid": "5f1a97cdbff23760962e88f7"
+        },
+        "summary": "DELETE",
+        "operationId": "delete-raw_test",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request -- Your request is invalid.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+          "500": {
+            "description": "Internal Server Error -- We had a problem with our server. Try again later.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+            },
+          },
+        },
+        "code": "delete-/api/itsm/v1/raw_test",
+        "type": "api",
+        "config_collection": "documentation_apis",
+        "created_at": 1595578317,
+        "updated_at": 1595580342,
+        "mod_count": 6,
+        "enabled": true,
+        "deleted": false,
+        "locked_by": null,
+        "updated_by": "5def47c09ab72603bc39233e",
+        "tags": [
+          "raw_test"
+        ],
+      },
+    },
+  },
+  "type": "api",
+  "deleted": false,
+  "enabled": true,
+  "code": "index-api",
+  "mod_count": 23,
+  "updated_at": 1595580343,
+  "config_collection": "documentation_apis",
+  "locked_by": null,
+  "updated_by": "5def47c09ab72603bc39233e",
+  "tags": [
+    {
+      "name": "tung_raw"
+    },
+    {
+      "name": "raw_test"
+    }
+  ],
+  "__an_scopes": {
+    "excludes": []
+  },
+}
