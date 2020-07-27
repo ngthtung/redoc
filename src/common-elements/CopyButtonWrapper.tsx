@@ -13,7 +13,9 @@ export interface CopyButtonWrapperProps {
     data: any;
     eventChange(data: any): void;
     onSaved(): void;
+    options: any;
   }) => React.ReactNode;
+  type?: string | number;
 }
 
 export class CopyButtonWrapper extends React.PureComponent<
@@ -36,7 +38,7 @@ export class CopyButtonWrapper extends React.PureComponent<
 
   onSaved = () => {
     this.props?.options?.onSaved({
-      beforeData: this.props.data,
+      type: this.props.type,
       afterData: this.state.data,
       operation: {
         id: this.props.operation?.id,
@@ -52,6 +54,7 @@ export class CopyButtonWrapper extends React.PureComponent<
       data: this.state.data,
       eventChange: this.eventChange,
       onSaved: this.onSaved,
+      options: this.props.options,
     });
   }
 

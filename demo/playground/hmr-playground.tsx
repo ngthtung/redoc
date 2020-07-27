@@ -27,10 +27,13 @@ const specUrl =
 
 let store;
 const test = (e = null) => {
-  console.log('e', e)
-}
+  console.log('e', e);
+};
 const options: RedocRawOptions = {
-  nativeScrollbars: false, defaultLink: '/docs-api', onSaved: test
+  nativeScrollbars: false,
+  defaultLink: '/docs-api',
+  onSaved: test,
+  canSaved: false,
 };
 
 async function init() {

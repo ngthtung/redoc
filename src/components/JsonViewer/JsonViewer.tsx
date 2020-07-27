@@ -12,6 +12,7 @@ export interface JsonProps {
   options?: RedocNormalizedOptions;
   operation: OperationModel;
   className?: string;
+  type?: string | number; // type === 1 ? 'Request samples' : Response samples
 }
 
 const JsonViewerWrap = styled.div`
@@ -38,6 +39,7 @@ class Json extends React.PureComponent<JsonProps, any> {
           data={this.state.data}
           options={this.state.options}
           operation={this.props.operation}
+          type={this.props.type}
         >
           {this.renderInner}
         </CopyButtonWrapper>
@@ -45,36 +47,46 @@ class Json extends React.PureComponent<JsonProps, any> {
     );
   }
 
-  renderInner = ({ renderCopyButton, data, eventChange, onSaved }) => (
-    <JsonViewerWrap>
-      <SampleControls>
-        {renderCopyButton()}
-        <button onClick={() => onSaved()}> Save all </button>
-      </SampleControls>
-      <div>
-        <ReactJson
-          src={data}
-          collapsed={false}
-          theme={'bright'}
-          displayDataTypes={false}
-          enableClipboard={false}
-          groupArraysAfterLength={5}
-          iconStyle={'square'}
-          collapseStringsAfterLength={20}
-          name={false}
-          onEdit={e => {
-            eventChange(e!.updated_src);
-          }}
-          onAdd={e => {
-            eventChange(e!.updated_src);
-          }}
-          onDelete={e => {
-            eventChange(e!.updated_src);
-          }}
-        />
-      </div>
-    </JsonViewerWrap>
-  );
+  renderInner = ({ renderCopyButton, data, eventChange, onSaved, options }) => {
+    let canSaved = options?.canSaved || false;
+
+    return (
+      <JsonViewerWrap>
+        <SampleControls>
+          {renderCopyButton()}
+          {canSaved && <button onClick={() => onSaved()}> Save all </button>}
+        </SampleControls>
+        <div>
+          <ReactJson
+            src={data}
+            collapsed={false}
+            theme={'bright'}
+            displayDataTypes={false}
+            enableClipboard={false}
+            groupArraysAfterLength={5}
+            iconStyle={'square'}
+            collapseStringsAfterLength={20}
+            name={false}
+            {...(canSaved && {
+              onEdit: e => {
+                eventChange(e!.updated_src);
+              },
+            })}
+            {...(canSaved && {
+              onAdd: e => {
+                eventChange(e!.updated_src);
+              },
+            })}
+            {...(canSaved && {
+              onDelete: e => {
+                eventChange(e!.updated_src);
+              },
+            })}
+          />
+        </div>
+      </JsonViewerWrap>
+    );
+  };
 
   expandAll = () => {
     const elements = this.node.getElementsByClassName('collapsible');

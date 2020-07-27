@@ -10,6 +10,7 @@ export interface RedocRawOptions {
   scrollYOffset?: number | string | (() => number);
   onSaved?: { (): any } | any;
   hideHostname?: boolean | string;
+  canSaved?: boolean | false;
   expandResponses?: string | 'all';
   defaultLink?: string;
   requiredPropsFirst?: boolean | string;
@@ -88,6 +89,10 @@ export class RedocNormalizedOptions {
 
   static normalizeString(value: RedocRawOptions['defaultLink']): string {
     return value || '/docs-api';
+  }
+
+  static normalizeCanSaved(value: RedocRawOptions['canSaved']): boolean {
+    return value || false;
   }
 
   static normalizeFunction(value: RedocRawOptions['onSaved']): any {
@@ -176,6 +181,7 @@ export class RedocNormalizedOptions {
   theme: ResolvedThemeInterface;
   scrollYOffset: () => number;
   onSaved: (arg0: any) => void;
+  canSaved: boolean;
   hideHostname: boolean;
   expandResponses: { [code: string]: boolean } | 'all';
   requiredPropsFirst: boolean;
@@ -231,6 +237,7 @@ export class RedocNormalizedOptions {
 
     this.scrollYOffset = RedocNormalizedOptions.normalizeScrollYOffset(raw.scrollYOffset);
     this.onSaved = RedocNormalizedOptions.normalizeFunction(raw.onSaved);
+    this.canSaved = RedocNormalizedOptions.normalizeCanSaved(raw.canSaved);
     this.hideHostname = RedocNormalizedOptions.normalizeHideHostname(raw.hideHostname);
     this.expandResponses = RedocNormalizedOptions.normalizeExpandResponses(raw.expandResponses);
     this.defaultLink = RedocNormalizedOptions.normalizeString(raw.defaultLink);

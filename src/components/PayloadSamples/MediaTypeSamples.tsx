@@ -14,6 +14,7 @@ export interface PayloadSamplesProps {
   options: RedocNormalizedOptions;
   operation: OperationModel;
   renderDropdown: (props: DropdownProps) => JSX.Element;
+  type: string | number;
 }
 
 interface MediaTypeSamplesState {
@@ -70,6 +71,7 @@ export class MediaTypeSamples extends React.Component<PayloadSamplesProps, Media
               mimeType={mimeType}
               options={this.props.options}
               operation={this.props.operation}
+              type={this.props.type}
             />
           </div>
         </SamplesWrapper>
@@ -84,6 +86,7 @@ export class MediaTypeSamples extends React.Component<PayloadSamplesProps, Media
             mimeType={mimeType}
             options={this.props.options}
             operation={this.props.operation}
+            type={this.props.type}
           />
         </SamplesWrapper>
       );

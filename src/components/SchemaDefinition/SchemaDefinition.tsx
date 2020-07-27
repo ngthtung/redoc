@@ -22,6 +22,7 @@ export interface ObjectDescriptionProps {
   parser: OpenAPIParser;
   options: RedocNormalizedOptions;
   operation: OperationModel;
+  type: string | number;
 }
 
 export class SchemaDefinition extends React.PureComponent<ObjectDescriptionProps> {
@@ -77,6 +78,7 @@ export class SchemaDefinition extends React.PureComponent<ObjectDescriptionProps
                 mediaType={this.mediaModel}
                 options={this.props.options}
                 operation={this.props.operation}
+                type={this.props.type}
               />
             </MediaSamplesWrap>
           </DarkRightPanel>

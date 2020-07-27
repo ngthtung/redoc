@@ -11,9 +11,10 @@ export interface ExampleProps {
   options: RedocNormalizedOptions;
   operation: OperationModel;
   mimeType: string;
+  type: string | number;
 }
 
-export function Example({ example, mimeType, options, operation }: ExampleProps) {
+export function Example({ example, mimeType, options, operation, type }: ExampleProps) {
   if (example.value === undefined && example.externalValueUrl) {
     return (
       <ExternalExample
@@ -21,6 +22,7 @@ export function Example({ example, mimeType, options, operation }: ExampleProps)
         mimeType={mimeType}
         options={options}
         operation={operation}
+        type={type}
       />
     );
   } else {
@@ -30,12 +32,13 @@ export function Example({ example, mimeType, options, operation }: ExampleProps)
         mimeType={mimeType}
         options={options}
         operation={operation}
+        type={type}
       />
     );
   }
 }
 
-export function ExternalExample({ example, mimeType, options, operation }: ExampleProps) {
+export function ExternalExample({ example, mimeType, options, operation, type }: ExampleProps) {
   const value = useExternalExample(example, mimeType);
 
   if (value === undefined) {
@@ -58,5 +61,13 @@ export function ExternalExample({ example, mimeType, options, operation }: Examp
     );
   }
 
-  return <ExampleValue value={value} mimeType={mimeType} options={options} operation={operation} />;
+  return (
+    <ExampleValue
+      value={value}
+      mimeType={mimeType}
+      options={options}
+      operation={operation}
+      type={type}
+    />
+  );
 }

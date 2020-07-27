@@ -10,11 +10,12 @@ export interface ExampleValueProps {
   options?: RedocNormalizedOptions;
   operation: OperationModel;
   mimeType: string;
+  type?: string | number;
 }
 
-export function ExampleValue({ value, mimeType, options, operation }: ExampleValueProps) {
+export function ExampleValue({ value, mimeType, options, operation, type }: ExampleValueProps) {
   if (isJsonLike(mimeType)) {
-    return <JsonViewer data={value} options={options} operation={operation} />;
+    return <JsonViewer data={value} options={options} operation={operation} type={type} />;
   } else {
     if (typeof value === 'object') {
       // just in case example was cached as json but used as non-json

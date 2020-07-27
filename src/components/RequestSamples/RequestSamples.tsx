@@ -43,6 +43,7 @@ export class RequestSamples extends React.Component<RequestSamplesProps> {
                       content={sample.requestBodyContent}
                       options={operation.options}
                       operation={this.props.operation}
+                      type={1}
                     />
                   </div>
                 ) : (

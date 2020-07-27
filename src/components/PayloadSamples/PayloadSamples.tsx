@@ -12,6 +12,7 @@ export interface PayloadSamplesProps {
   content: MediaContentModel;
   options: RedocNormalizedOptions;
   operation: OperationModel;
+  type: number | string;
 }
 
 @observer
@@ -31,6 +32,7 @@ export class PayloadSamples extends React.Component<PayloadSamplesProps> {
             renderDropdown={this.renderDropdown}
             options={this.props.options}
             operation={this.props.operation}
+            type={this.props.type}
           />
         )}
       </MediaTypesSwitch>

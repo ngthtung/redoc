@@ -40,6 +40,7 @@ export class ResponseSamples extends React.Component<ResponseSamplesProps> {
                     content={response.content!}
                     options={operation.options}
                     operation={operation}
+                    type={2}
                   />
                 </div>
               </TabPanel>
