@@ -7,12 +7,13 @@ import { DropdownOrLabel } from '../DropdownOrLabel/DropdownOrLabel';
 import { MediaTypesSwitch } from '../MediaTypeSwitch/MediaTypesSwitch';
 import { InvertedSimpleDropdown, MimeLabel } from './styled.elements';
 import { RedocNormalizedOptions, OperationModel } from '../../services';
+import { TypeSample } from '../../services/utils';
 
 export interface PayloadSamplesProps {
   content: MediaContentModel;
   options: RedocNormalizedOptions;
   operation: OperationModel;
-  type: number | string;
+  type: TypeSample;
 }
 
 @observer

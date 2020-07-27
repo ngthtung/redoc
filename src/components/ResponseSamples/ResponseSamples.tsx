@@ -33,18 +33,23 @@ export class ResponseSamples extends React.Component<ResponseSamplesProps> {
                 </Tab>
               ))}
             </TabList>
-            {responses.map(response => (
-              <TabPanel key={response.code}>
-                <div>
-                  <PayloadSamples
-                    content={response.content!}
-                    options={operation.options}
-                    operation={operation}
-                    type={2}
-                  />
-                </div>
-              </TabPanel>
-            ))}
+            {responses.map(response => {
+              return (
+                <TabPanel key={response.code}>
+                  <div>
+                    <PayloadSamples
+                      content={response.content!}
+                      options={operation.options}
+                      operation={operation}
+                      type={{
+                        code: 2,
+                        data: response,
+                      }}
+                    />
+                  </div>
+                </TabPanel>
+              );
+            })}
           </Tabs>
         </div>
       )) ||

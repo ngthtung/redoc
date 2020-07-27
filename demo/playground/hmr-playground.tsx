@@ -33,7 +33,7 @@ const options: RedocRawOptions = {
   nativeScrollbars: false,
   defaultLink: '/docs-api',
   onSaved: test,
-  canSaved: false,
+  canSaved: true,
 };
 
 async function init() {

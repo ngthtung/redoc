@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import * as _ from 'lodash';
 import styled from '../../styled-components';
 
 import { DropdownProps } from '../../common-elements';
@@ -8,13 +8,14 @@ import { Markdown } from '../Markdown/Markdown';
 import { Example } from './Example';
 import { DropdownLabel, DropdownWrapper, NoSampleLabel } from './styled.elements';
 import { RedocNormalizedOptions, OperationModel } from '../../services';
+import { TypeSample } from '../../services/utils';
 
 export interface PayloadSamplesProps {
   mediaType: MediaTypeModel;
   options: RedocNormalizedOptions;
   operation: OperationModel;
   renderDropdown: (props: DropdownProps) => JSX.Element;
-  type: string | number;
+  type: TypeSample;
 }
 
 interface MediaTypeSamplesState {
@@ -30,6 +31,15 @@ export class MediaTypeSamples extends React.Component<PayloadSamplesProps, Media
       activeIdx: idx,
     });
   };
+
+  removeEmpty = obj => {
+    Object.keys(obj).forEach(key => {
+      if (obj[key] && typeof obj[key] === 'object') this.removeEmpty(obj[key]);
+      // recurse
+      else if (obj[key] == null) delete obj[key]; // delete
+    });
+  };
+
   render() {
     const { activeIdx } = this.state;
     const examples = this.props.mediaType.examples || {};
@@ -50,7 +60,8 @@ export class MediaTypeSamples extends React.Component<PayloadSamplesProps, Media
         };
       });
 
-      const example = examples[examplesNames[activeIdx]];
+      let example = examples[examplesNames[activeIdx]];
+      this.removeEmpty(example);
       const description = example.description;
 
       return (
@@ -77,7 +88,9 @@ export class MediaTypeSamples extends React.Component<PayloadSamplesProps, Media
         </SamplesWrapper>
       );
     } else {
-      const example = examples[examplesNames[0]];
+      let example = examples[examplesNames[0]];
+      // remove value is null
+      this.removeEmpty(example);
       return (
         <SamplesWrapper>
           {example.description && <Markdown source={example.description} />}

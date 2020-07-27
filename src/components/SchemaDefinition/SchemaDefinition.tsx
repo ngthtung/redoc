@@ -13,6 +13,7 @@ import { DropdownOrLabel } from '../DropdownOrLabel/DropdownOrLabel';
 import { MediaTypeSamples } from '../PayloadSamples/MediaTypeSamples';
 import { InvertedSimpleDropdown } from '../PayloadSamples/styled.elements';
 import { Schema } from '../Schema';
+import { TypeSample } from '../../services/utils';
 
 export interface ObjectDescriptionProps {
   schemaRef: string;
@@ -22,7 +23,7 @@ export interface ObjectDescriptionProps {
   parser: OpenAPIParser;
   options: RedocNormalizedOptions;
   operation: OperationModel;
-  type: string | number;
+  type: TypeSample;
 }
 
 export class SchemaDefinition extends React.PureComponent<ObjectDescriptionProps> {

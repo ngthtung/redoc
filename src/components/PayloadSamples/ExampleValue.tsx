@@ -4,13 +4,14 @@ import { isJsonLike, langFromMime } from '../../utils/openapi';
 import { JsonViewer } from '../JsonViewer/JsonViewer';
 import { SourceCodeWithCopy } from '../SourceCode/SourceCode';
 import { RedocNormalizedOptions, OperationModel } from '../../services';
+import { TypeSample } from '../../services/utils';
 
 export interface ExampleValueProps {
   value: any;
   options?: RedocNormalizedOptions;
   operation: OperationModel;
   mimeType: string;
-  type?: string | number;
+  type?: TypeSample;
 }
 
 export function ExampleValue({ value, mimeType, options, operation, type }: ExampleValueProps) {

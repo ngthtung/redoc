@@ -5,13 +5,14 @@ import { ExampleModel } from '../../services/models';
 import { ExampleValue } from './ExampleValue';
 import { useExternalExample } from './exernalExampleHook';
 import { RedocNormalizedOptions, OperationModel } from '../../services';
+import { TypeSample } from '../../services/utils';
 
 export interface ExampleProps {
   example: ExampleModel;
   options: RedocNormalizedOptions;
   operation: OperationModel;
   mimeType: string;
-  type: string | number;
+  type: TypeSample;
 }
 
 export function Example({ example, mimeType, options, operation, type }: ExampleProps) {

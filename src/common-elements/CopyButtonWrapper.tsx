@@ -3,6 +3,7 @@ import { Tooltip } from '../common-elements/Tooltip';
 
 import { ClipboardService } from '../services/ClipboardService';
 import { RedocNormalizedOptions, OperationModel } from '../services';
+import { TypeSample } from '../services/utils';
 
 export interface CopyButtonWrapperProps {
   data: any;
@@ -15,7 +16,7 @@ export interface CopyButtonWrapperProps {
     onSaved(): void;
     options: any;
   }) => React.ReactNode;
-  type?: string | number;
+  type?: TypeSample;
 }
 
 export class CopyButtonWrapper extends React.PureComponent<

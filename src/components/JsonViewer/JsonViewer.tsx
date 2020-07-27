@@ -6,13 +6,14 @@ import { CopyButtonWrapper } from '../../common-elements/CopyButtonWrapper';
 import { jsonStyles } from './style';
 import ReactJson from 'react-json-view';
 import { RedocNormalizedOptions, OperationModel } from '../../services';
+import { TypeSample } from '../../services/utils';
 
 export interface JsonProps {
   data: any;
   options?: RedocNormalizedOptions;
   operation: OperationModel;
   className?: string;
-  type?: string | number; // type === 1 ? 'Request samples' : Response samples
+  type?: TypeSample; // type === 1 ? 'Request samples' : Response samples
 }
 
 const JsonViewerWrap = styled.div`
