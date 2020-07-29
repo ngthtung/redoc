@@ -9,6 +9,7 @@ export interface RedocRawOptions {
   theme?: ThemeInterface;
   scrollYOffset?: number | string | (() => number);
   onSaved?: { (): any } | any;
+  deleteItem?: { (): any } | any;
   collapseTagGroups?: boolean | string;
   hideHostname?: boolean | string;
   canSaved?: boolean | false;
@@ -96,7 +97,7 @@ export class RedocNormalizedOptions {
     return value || false;
   }
 
-  static normalizeFunction(value: RedocRawOptions['onSaved']): any {
+  static normalizeFunction(value: any): any {
     if (typeof value === 'function') {
       return value;
     }
@@ -183,6 +184,7 @@ export class RedocNormalizedOptions {
   collapseTagGroups: boolean;
   scrollYOffset: () => number;
   onSaved: (arg0: any) => void;
+  deleteItem: (arg0: any) => void;
   canSaved: boolean;
   hideHostname: boolean;
   expandResponses: { [code: string]: boolean } | 'all';
@@ -239,6 +241,7 @@ export class RedocNormalizedOptions {
 
     this.scrollYOffset = RedocNormalizedOptions.normalizeScrollYOffset(raw.scrollYOffset);
     this.onSaved = RedocNormalizedOptions.normalizeFunction(raw.onSaved);
+    this.deleteItem = RedocNormalizedOptions.normalizeFunction(raw.deleteItem);
     this.canSaved = RedocNormalizedOptions.normalizeCanSaved(raw.canSaved);
     this.hideHostname = RedocNormalizedOptions.normalizeHideHostname(raw.hideHostname);
     this.expandResponses = RedocNormalizedOptions.normalizeExpandResponses(raw.expandResponses);

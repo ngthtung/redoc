@@ -2,6 +2,7 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { ShelfIcon } from '../../common-elements/shelfs';
+import { CloseIcon } from '../../common-elements/close';
 import { GROUP_DEPTH, IMenuItem, OperationModel, RedocNormalizedOptions } from '../../services';
 import { shortenHTTPVerb } from '../../utils/openapi';
 import { MenuItems } from './MenuItems';
@@ -47,6 +48,7 @@ export class MenuItem extends React.Component<MenuItemProps> {
       <MenuItemLi
         onClick={this.activate}
         depth={item.depth}
+        type={item.type}
         ref={this.saveRef}
         data-item-id={item.id}
       >
@@ -61,7 +63,11 @@ export class MenuItem extends React.Component<MenuItemProps> {
             {((item.depth >= 0 ||
               (item.depth === GROUP_DEPTH && this.props.options.collapseTagGroups)) &&
               item.items.length > 0 && (
-                <ShelfIcon float={'right'} direction={item.expanded ? 'down' : 'right'} />
+                <ShelfIcon
+                  float={'right'}
+                  direction={item.expanded ? 'down' : 'right'}
+                  color={'white'}
+                />
               )) ||
               null}
           </MenuItemLabel>
@@ -81,6 +87,7 @@ export class MenuItem extends React.Component<MenuItemProps> {
 
 export interface OperationMenuItemContentProps {
   item: OperationModel;
+  options: RedocNormalizedOptions;
 }
 
 @observer
@@ -94,6 +101,12 @@ class OperationMenuItemContent extends React.Component<OperationMenuItemContentP
           {item.name}
           {this.props.children}
         </MenuItemTitle>
+        <CloseIcon
+          color="warning"
+          handleClick={() => {
+            this.props.options?.deleteItem(item);
+          }}
+        />
       </MenuItemLabel>
     );
   }

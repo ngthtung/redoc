@@ -85,11 +85,11 @@ export const MenuItemUl = styled.ul<{ expanded: boolean }>`
   ${props => (props.expanded ? '' : 'display: none;')};
 `;
 
-export const MenuItemLi = styled.li<{ depth: number }>`
+export const MenuItemLi = styled.li<{ depth: number; type: string }>`
   list-style: none inside none;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding-left: ${props => props.depth * 10 + 'px'};
+  padding-left: ${props => props.type !== 'section' && props.depth * 10 + 'px'};
   ${props => (props.depth === 0 ? 'margin-top: 15px' : '')};
 `;
 
@@ -141,6 +141,7 @@ export const MenuItemLabel = styled.label.attrs((props: MenuItemLabelType) => ({
   justify-content: space-between;
   font-family: ${props => props.theme.typography.headings.fontFamily};
   ${props => menuItemDepth[props.depth]};
+  ${props => (props.type === 'group' ? 'padding-bottom: 12.5px ; cursor : pointer' : '')};
   background-color: ${props => (props.active ? menuItemActiveBg(props.depth, props) : '')};
 
   ${props => (props.deprecated && deprecatedCss) || ''};
