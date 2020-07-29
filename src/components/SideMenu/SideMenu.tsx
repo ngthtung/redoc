@@ -23,7 +23,12 @@ export class SideMenu extends React.Component<{ menu: MenuStore; className?: str
           wheelPropagation: false,
         }}
       >
-        <MenuItems items={store.items} onActivate={this.activate} root={true} />
+        <MenuItems
+          items={store.items}
+          onActivate={this.activate}
+          root={true}
+          options={this.props.menu.options}
+        />
         <RedocAttribution>
           <a target="_blank" rel="noopener noreferrer" href="https://github.com/Redocly/redoc">
             Documentation Powered by ReDoc
@@ -34,6 +39,7 @@ export class SideMenu extends React.Component<{ menu: MenuStore; className?: str
   }
 
   activate = (item: IMenuItem) => {
+    debugger;
     if (item && item.active && this.context.menuToggle) {
       return item.expanded ? item.collapse() : item.expand();
     }

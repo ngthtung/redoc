@@ -23,7 +23,7 @@ const swagger = window.location.search.indexOf('swagger') > -1;
 const userUrl = window.location.search.match(/url=(.*)$/);
 
 const specUrl =
-  (userUrl && userUrl[1]) || (swagger ? 'swagger.yaml' : big ? 'big-openapi.json' : 'openapi.yaml');
+  (userUrl && userUrl[1]) || (swagger ? 'swagger.yaml' : big ? 'big-openapi.json' : 'openapi.json');
 
 let store;
 const test = (e = null) => {
@@ -34,6 +34,7 @@ const options: RedocRawOptions = {
   defaultLink: '/docs-api',
   onSaved: test,
   canSaved: true,
+  collapseTagGroups: true,
 };
 
 async function init() {

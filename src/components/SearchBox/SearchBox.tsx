@@ -16,13 +16,14 @@ import {
   SearchResultsBox,
   SearchWrap,
 } from './styled.elements';
+import { RedocNormalizedOptions } from '../../services';
 
 export interface SearchBoxProps {
   search: SearchStore<string>;
   marker: MarkerService;
   getItemById: (id: string) => IMenuItem | undefined;
   onActivate: (item: IMenuItem) => void;
-
+  options: RedocNormalizedOptions;
   className?: string;
 }
 
@@ -160,6 +161,7 @@ export class SearchBox extends React.PureComponent<SearchBoxProps, SearchBoxStat
                   withoutChildren={true}
                   key={res.item.id}
                   data-role="search:result"
+                  options={this.props.options}
                 />
               ))}
             </SearchResultsBox>

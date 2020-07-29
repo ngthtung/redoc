@@ -50,6 +50,7 @@ export class Redoc extends React.Component<RedocProps> {
                     marker={marker}
                     getItemById={menu.getItemById}
                     onActivate={menu.activateAndScroll}
+                    options={menu.options}
                   />
                 )) ||
                   null}

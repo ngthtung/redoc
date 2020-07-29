@@ -9,6 +9,7 @@ export interface RedocRawOptions {
   theme?: ThemeInterface;
   scrollYOffset?: number | string | (() => number);
   onSaved?: { (): any } | any;
+  collapseTagGroups?: boolean | string;
   hideHostname?: boolean | string;
   canSaved?: boolean | false;
   expandResponses?: string | 'all';
@@ -179,6 +180,7 @@ export class RedocNormalizedOptions {
   }
 
   theme: ResolvedThemeInterface;
+  collapseTagGroups: boolean;
   scrollYOffset: () => number;
   onSaved: (arg0: any) => void;
   canSaved: boolean;
@@ -253,6 +255,7 @@ export class RedocNormalizedOptions {
     this.disableSearch = argValueToBoolean(raw.disableSearch);
     this.onlyRequiredInSamples = argValueToBoolean(raw.onlyRequiredInSamples);
     this.showExtensions = RedocNormalizedOptions.normalizeShowExtensions(raw.showExtensions);
+    this.collapseTagGroups = argValueToBoolean(raw.collapseTagGroups);
     this.hideSingleRequestSampleTab = argValueToBoolean(raw.hideSingleRequestSampleTab);
     this.menuToggle = argValueToBoolean(raw.menuToggle, true);
     this.jsonSampleExpandLevel = RedocNormalizedOptions.normalizeJsonSampleExpandLevel(

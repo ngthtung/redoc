@@ -67,6 +67,8 @@ function menuItemActiveBg(depth, { theme }: { theme: ResolvedThemeInterface }): 
     return darken(0.1, theme.sidebar.backgroundColor);
   } else if (depth === 1) {
     return darken(0.05, theme.sidebar.backgroundColor);
+  } else if (depth === 0) {
+    return darken(0.15, theme.sidebar.backgroundColor);
   } else {
     return '';
   }
@@ -87,7 +89,7 @@ export const MenuItemLi = styled.li<{ depth: number }>`
   list-style: none inside none;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 0;
+  padding-left: ${props => props.depth * 10 + 'px'};
   ${props => (props.depth === 0 ? 'margin-top: 15px' : '')};
 `;
 
@@ -99,6 +101,9 @@ export const menuItemDepth = {
     padding-bottom: 0;
     cursor: default;
     color: ${props => props.theme.sidebar.textColor};
+    &:hover {
+      color: ${props => props.theme.colors.primary.main};
+    }
   `,
   1: css`
     font-size: 0.929em;

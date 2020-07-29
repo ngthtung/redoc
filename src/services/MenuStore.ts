@@ -77,7 +77,12 @@ export class MenuStore {
    * @param spec [SpecStore](#SpecStore) which contains page content structure
    * @param scroll scroll service instance used by this menu
    */
-  constructor(spec: SpecStore, public scroll: ScrollService, public history: HistoryService) {
+  constructor(
+    spec: SpecStore,
+    public scroll: ScrollService,
+    public history: HistoryService,
+    public options: RedocNormalizedOptions,
+  ) {
     this.items = spec.contentItems;
 
     this.flatItems = flattenByProp(this.items || [], 'items');
@@ -204,9 +209,9 @@ export class MenuStore {
       return;
     }
 
-    if (item && item.type === 'group') {
-      return;
-    }
+    // if (item && item.type === 'group') {
+    //   return;
+    // }
     this.deactivate(this.activeItem);
     if (!item) {
       if (rewriteHistory) {
@@ -217,7 +222,7 @@ export class MenuStore {
 
     // do not allow activating group items
     // TODO: control over options
-    if (item.depth <= GROUP_DEPTH) {
+    if (item.depth <= GROUP_DEPTH && !this.options.collapseTagGroups) {
       return;
     }
 
