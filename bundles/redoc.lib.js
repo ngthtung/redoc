@@ -6685,7 +6685,6 @@ __webpack_require__.d(__webpack_exports__, "OptionsContext", function() { return
 __webpack_require__.d(__webpack_exports__, "OptionsProvider", function() { return /* reexport */ OptionsProvider; });
 __webpack_require__.d(__webpack_exports__, "OptionsConsumer", function() { return /* reexport */ OptionsConsumer; });
 __webpack_require__.d(__webpack_exports__, "MenuItem", function() { return /* reexport */ MenuItem_MenuItem; });
-__webpack_require__.d(__webpack_exports__, "OperationMenuItemContent", function() { return /* reexport */ MenuItem_OperationMenuItemContent; });
 __webpack_require__.d(__webpack_exports__, "MenuItems", function() { return /* reexport */ MenuItems_MenuItems; });
 __webpack_require__.d(__webpack_exports__, "SideMenu", function() { return /* reexport */ SideMenu_SideMenu; });
 __webpack_require__.d(__webpack_exports__, "OperationBadge", function() { return /* reexport */ OperationBadge; });
@@ -7382,6 +7381,7 @@ var RedocNormalizedOptions_RedocNormalizedOptions = /** @class */ (function () {
         setRedocLabels(raw.labels);
         this.scrollYOffset = RedocNormalizedOptions.normalizeScrollYOffset(raw.scrollYOffset);
         this.onSaved = RedocNormalizedOptions.normalizeFunction(raw.onSaved);
+        this.deleteItem = RedocNormalizedOptions.normalizeFunction(raw.deleteItem);
         this.canSaved = RedocNormalizedOptions.normalizeCanSaved(raw.canSaved);
         this.hideHostname = RedocNormalizedOptions.normalizeHideHostname(raw.hideHostname);
         this.expandResponses = RedocNormalizedOptions.normalizeExpandResponses(raw.expandResponses);
@@ -7397,6 +7397,7 @@ var RedocNormalizedOptions_RedocNormalizedOptions = /** @class */ (function () {
         this.disableSearch = argValueToBoolean(raw.disableSearch);
         this.onlyRequiredInSamples = argValueToBoolean(raw.onlyRequiredInSamples);
         this.showExtensions = RedocNormalizedOptions.normalizeShowExtensions(raw.showExtensions);
+        this.collapseTagGroups = argValueToBoolean(raw.collapseTagGroups);
         this.hideSingleRequestSampleTab = argValueToBoolean(raw.hideSingleRequestSampleTab);
         this.menuToggle = argValueToBoolean(raw.menuToggle, true);
         this.jsonSampleExpandLevel = RedocNormalizedOptions.normalizeJsonSampleExpandLevel(raw.jsonSampleExpandLevel);
@@ -7595,7 +7596,7 @@ var ErrorBoundary_ErrorBoundary = /** @class */ (function (_super) {
                 external_react_["createElement"]("br", null),
                 external_react_["createElement"]("small", null,
                     " Commit: ",
-                    "c94a5c49"));
+                    "fdb5e4e7"));
         }
         return external_react_["Children"].only(this.props.children);
     };
@@ -9232,7 +9233,7 @@ var Group_model_GroupModel = /** @class */ (function () {
         }
         this.parent = parent;
         this.externalDocs = tagOrGroup.externalDocs; // groups are active (expanded) by default
-        if (this.type === 'group') {
+        if (this.type === 'group' && !this.options.collapseTagGroups) {
             this.expanded = true;
         }
     }
@@ -9247,7 +9248,7 @@ var Group_model_GroupModel = /** @class */ (function () {
     };
     GroupModel.prototype.collapse = function () {
         // disallow collapsing groups
-        if (this.type === 'group') {
+        if (this.type === 'group' && !this.options.collapseTagGroups) {
             return;
         }
         this.expanded = false;
@@ -10292,10 +10293,11 @@ var MenuStore_MenuStore = /** @class */ (function () {
      * @param spec [SpecStore](#SpecStore) which contains page content structure
      * @param scroll scroll service instance used by this menu
      */
-    function MenuStore(spec, scroll, history) {
+    function MenuStore(spec, scroll, history, options) {
         var _this = this;
         this.scroll = scroll;
         this.history = history;
+        this.options = options;
         /**
          * active item absolute index (when flattened). -1 means nothing is selected
          */
@@ -10425,10 +10427,9 @@ var MenuStore_MenuStore = /** @class */ (function () {
         if (rewriteHistory === void 0) { rewriteHistory = false; }
         if ((this.activeItem && this.activeItem.id) === (item && item.id)) {
             return;
-        }
-        if (item && item.type === 'group') {
-            return;
-        }
+        } // if (item && item.type === 'group') {
+        //   return;
+        // }
         this.deactivate(this.activeItem);
         if (!item) {
             if (rewriteHistory) { }
@@ -10436,7 +10437,7 @@ var MenuStore_MenuStore = /** @class */ (function () {
             return;
         } // do not allow activating group items
         // TODO: control over options
-        if (item.depth <= GROUP_DEPTH) {
+        if (item.depth <= GROUP_DEPTH && !this.options.collapseTagGroups) {
             return;
         }
         this.activeItemIdx = item.absoluteIdx;
@@ -12547,7 +12548,7 @@ var AppStore_AppStore = /** @class */ (function () {
         this.scroll = new ScrollService_ScrollService(this.options); // update position statically based on hash (in case of SSR)
         MenuStore_MenuStore.updateOnHistory(HistoryService_history.currentId, this.scroll);
         this.spec = new SpecStore_SpecStore(spec, specUrl, this.options);
-        this.menu = new MenuStore_MenuStore(this.spec, this.scroll, HistoryService_history);
+        this.menu = new MenuStore_MenuStore(this.spec, this.scroll, HistoryService_history, this.options);
         if (!this.options.disableSearch) {
             this.search = new SearchStore_SearchStore();
             if (createSearchIndex) {
@@ -12869,18 +12870,21 @@ function menuItemActiveBg(depth, _a) {
     else if (depth === 1) {
         return Object(external_polished_["darken"])(0.05, theme.sidebar.backgroundColor);
     }
+    else if (depth === 0) {
+        return Object(external_polished_["darken"])(0.15, theme.sidebar.backgroundColor);
+    }
     else {
         return '';
     }
 }
 var MenuItemUl = styled_components.ul(SideMenu_styled_elements_templateObject_2 || (SideMenu_styled_elements_templateObject_2 = Object(external_tslib_["__makeTemplateObject"])(["\n  margin: 0;\n  padding: 0;\n\n  & & {\n    font-size: 0.929em;\n  }\n\n  ", ";\n"], ["\n  margin: 0;\n  padding: 0;\n\n  & & {\n    font-size: 0.929em;\n  }\n\n  ", ";\n"])), function (props) { return props.expanded ? '' : 'display: none;'; });
-var MenuItemLi = styled_components.li(SideMenu_styled_elements_templateObject_3 || (SideMenu_styled_elements_templateObject_3 = Object(external_tslib_["__makeTemplateObject"])(["\n  list-style: none inside none;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  padding: 0;\n  ", ";\n"], ["\n  list-style: none inside none;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  padding: 0;\n  ", ";\n"])), function (props) { return props.depth === 0 ? 'margin-top: 15px' : ''; });
+var MenuItemLi = styled_components.li(SideMenu_styled_elements_templateObject_3 || (SideMenu_styled_elements_templateObject_3 = Object(external_tslib_["__makeTemplateObject"])(["\n  list-style: none inside none;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  padding-left: ", ";\n  ", ";\n"], ["\n  list-style: none inside none;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  padding-left: ", ";\n  ", ";\n"])), function (props) { return props.type !== 'section' && props.depth * 10 + 'px'; }, function (props) { return props.depth === 0 ? 'margin-top: 15px' : ''; });
 var menuItemDepth = {
-    0: css(SideMenu_styled_elements_templateObject_4 || (SideMenu_styled_elements_templateObject_4 = Object(external_tslib_["__makeTemplateObject"])(["\n    opacity: 0.7;\n    text-transform: ", ";\n    font-size: 0.8em;\n    padding-bottom: 0;\n    cursor: default;\n    color: ", ";\n  "], ["\n    opacity: 0.7;\n    text-transform: ",
-        ";\n    font-size: 0.8em;\n    padding-bottom: 0;\n    cursor: default;\n    color: ", ";\n  "])), function (_a) {
+    0: css(SideMenu_styled_elements_templateObject_4 || (SideMenu_styled_elements_templateObject_4 = Object(external_tslib_["__makeTemplateObject"])(["\n    opacity: 0.7;\n    text-transform: ", ";\n    font-size: 0.8em;\n    padding-bottom: 0;\n    cursor: default;\n    color: ", ";\n    &:hover {\n      color: ", ";\n    }\n  "], ["\n    opacity: 0.7;\n    text-transform: ",
+        ";\n    font-size: 0.8em;\n    padding-bottom: 0;\n    cursor: default;\n    color: ", ";\n    &:hover {\n      color: ", ";\n    }\n  "])), function (_a) {
         var theme = _a.theme;
         return theme.sidebar.groupItems.textTransform;
-    }, function (props) { return props.theme.sidebar.textColor; }),
+    }, function (props) { return props.theme.sidebar.textColor; }, function (props) { return props.theme.colors.primary.main; }),
     1: css(SideMenu_styled_elements_templateObject_5 || (SideMenu_styled_elements_templateObject_5 = Object(external_tslib_["__makeTemplateObject"])(["\n    font-size: 0.929em;\n    text-transform: ", ";\n    &:hover {\n      color: ", ";\n    }\n  "], ["\n    font-size: 0.929em;\n    text-transform: ",
         ";\n    &:hover {\n      color: ", ";\n    }\n  "])), function (_a) {
         var theme = _a.theme;
@@ -12893,14 +12897,14 @@ var MenuItemLabel = styled_components.label.attrs(function (props) { return ({
     className: external_classnames_('-depth' + props.depth, {
         active: props.active
     })
-}); })(styled_elements_templateObject_7 || (styled_elements_templateObject_7 = Object(external_tslib_["__makeTemplateObject"])(["\n  cursor: pointer;\n  color: ", ";\n  margin: 0;\n  padding: 12.5px ", "px;\n  ", "\n  display: flex;\n  justify-content: space-between;\n  font-family: ", ";\n  ", ";\n  background-color: ", ";\n\n  ", ";\n\n  &:hover {\n    background-color: ", ";\n  }\n\n  ", " {\n    height: ", ";\n    width: ", ";\n    polygon {\n      fill: ", ";\n    }\n  }\n"], ["\n  cursor: pointer;\n  color: ", ";\n  margin: 0;\n  padding: 12.5px ", "px;\n  ",
-    "\n  display: flex;\n  justify-content: space-between;\n  font-family: ", ";\n  ", ";\n  background-color: ", ";\n\n  ", ";\n\n  &:hover {\n    background-color: ", ";\n  }\n\n  ", " {\n    height: ",
+}); })(styled_elements_templateObject_7 || (styled_elements_templateObject_7 = Object(external_tslib_["__makeTemplateObject"])(["\n  cursor: pointer;\n  color: ", ";\n  margin: 0;\n  padding: 12.5px ", "px;\n  ", "\n  display: flex;\n  justify-content: space-between;\n  font-family: ", ";\n  ", ";\n  ", ";\n  background-color: ", ";\n\n  ", ";\n\n  &:hover {\n    background-color: ", ";\n  }\n\n  ", " {\n    height: ", ";\n    width: ", ";\n    polygon {\n      fill: ", ";\n    }\n  }\n"], ["\n  cursor: pointer;\n  color: ", ";\n  margin: 0;\n  padding: 12.5px ", "px;\n  ",
+    "\n  display: flex;\n  justify-content: space-between;\n  font-family: ", ";\n  ", ";\n  ", ";\n  background-color: ", ";\n\n  ", ";\n\n  &:hover {\n    background-color: ", ";\n  }\n\n  ", " {\n    height: ",
     ";\n    width: ",
     ";\n    polygon {\n      fill: ",
     ";\n    }\n  }\n"])), function (props) { return props.active ? props.theme.sidebar.activeTextColor : props.theme.sidebar.textColor; }, function (props) { return props.theme.spacing.unit * 4; }, function (_a) {
     var depth = _a.depth, type = _a.type, theme = _a.theme;
     return type === 'section' && depth > 1 && 'padding-left: ' + theme.spacing.unit * 8 + 'px;' || '';
-}, function (props) { return props.theme.typography.headings.fontFamily; }, function (props) { return menuItemDepth[props.depth]; }, function (props) { return props.active ? menuItemActiveBg(props.depth, props) : ''; }, function (props) { return props.deprecated && deprecatedCss || ''; }, function (props) { return menuItemActiveBg(props.depth, props); }, ShelfIcon, function (_a) {
+}, function (props) { return props.theme.typography.headings.fontFamily; }, function (props) { return menuItemDepth[props.depth]; }, function (props) { return props.type === 'group' ? 'padding-bottom: 12.5px ; cursor : pointer' : ''; }, function (props) { return props.active ? menuItemActiveBg(props.depth, props) : ''; }, function (props) { return props.deprecated && deprecatedCss || ''; }, function (props) { return menuItemActiveBg(props.depth, props); }, ShelfIcon, function (_a) {
     var theme = _a.theme;
     return theme.sidebar.arrow.size;
 }, function (_a) {
@@ -13928,9 +13932,28 @@ var ContentItems_OperationItem = /** @class */ (function (_super) {
 }(external_react_["Component"]));
 
 
+// CONCATENATED MODULE: ./src/common-elements/close.tsx
+
+
+
+var close_IntCloseIcon = /** @class */ (function (_super) {
+    Object(external_tslib_["__extends"])(IntCloseIcon, _super);
+    function IntCloseIcon() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    IntCloseIcon.prototype.render = function () {
+        return external_react_["createElement"]("svg", { className: this.props.className, style: this.props.style, onClick: this.props.handleClick, xmlns: "http://www.w3.org/2000/svg", width: "15", height: "15", viewBox: "0 0 15 15" },
+            external_react_["createElement"]("path", { d: "M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z" }));
+    };
+    return IntCloseIcon;
+}(external_react_["PureComponent"]));
+var CloseIcon = styled_components(close_IntCloseIcon)(close_templateObject_1 || (close_templateObject_1 = Object(external_tslib_["__makeTemplateObject"])(["\n  height: ", ";\n  width: ", ";\n  vertical-align: middle;\n  float: ", ";\n  fill: ", ";\n  transition: transform 0.2s ease-out;\n\n  polygon {\n    fill: ", ";\n  }\n"], ["\n  height: ", ";\n  width: ", ";\n  vertical-align: middle;\n  float: ", ";\n  fill: ", ";\n  transition: transform 0.2s ease-out;\n\n  polygon {\n    fill: ", ";\n  }\n"])), function (props) { return props.size || '15px'; }, function (props) { return props.size || '15px'; }, function (props) { return props.float || ''; }, function (props) { return props.color ? props.theme.colors[props.color].main : ''; }, function (props) { return props.color && props.theme.colors[props.color] && props.theme.colors[props.color].main || props.color; });
+var close_templateObject_1;
+
 // CONCATENATED MODULE: ./src/components/SideMenu/MenuItem.tsx
 
-// import { observe } from 'mobx';
+
+
 
 
 
@@ -13941,10 +13964,12 @@ var MenuItem_MenuItem = /** @class */ (function (_super) {
     Object(external_tslib_["__extends"])(MenuItem, _super);
     function MenuItem() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.ref = external_react_["createRef"]();
         _this.activate = function (evt) {
             _this.props.onActivate(_this.props.item);
             evt.stopPropagation();
+        };
+        _this.saveRef = function (ref) {
+            _this.ref = ref;
         };
         return _this;
     }
@@ -13955,19 +13980,19 @@ var MenuItem_MenuItem = /** @class */ (function (_super) {
         this.scrollIntoViewIfActive();
     };
     MenuItem.prototype.scrollIntoViewIfActive = function () {
-        if (this.props.item.active && this.ref.current) {
-            this.ref.current.scrollIntoViewIfNeeded();
+        if (this.props.item.active && this.ref) {
+            this.ref.scrollIntoViewIfNeeded();
         }
     };
     MenuItem.prototype.render = function () {
         var _a = this.props, item = _a.item, withoutChildren = _a.withoutChildren;
-        return external_react_["createElement"](MenuItemLi, { onClick: this.activate, depth: item.depth, "data-item-id": item.id },
-            item.type === 'operation' ? external_react_["createElement"](MenuItem_OperationMenuItemContent, Object(external_tslib_["__assign"])({}, this.props, { item: item })) : external_react_["createElement"](MenuItemLabel, { depth: item.depth, active: item.active, type: item.type, ref: this.ref },
+        return external_react_["createElement"](MenuItemLi, { onClick: this.activate, depth: item.depth, type: item.type, ref: this.saveRef, "data-item-id": item.id },
+            item.type === 'operation' ? external_react_["createElement"](MenuItem_OperationMenuItemContent, Object(external_tslib_["__assign"])({}, this.props, { item: item })) : external_react_["createElement"](MenuItemLabel, { depth: item.depth, active: item.active, type: item.type },
                 external_react_["createElement"](MenuItemTitle, { title: item.name },
                     item.name,
                     this.props.children),
-                item.depth > 0 && item.items.length > 0 && external_react_["createElement"](ShelfIcon, { float: 'right', direction: item.expanded ? 'down' : 'right' }) || null),
-            !withoutChildren && item.items && item.items.length > 0 && external_react_["createElement"](MenuItems_MenuItems, { expanded: item.expanded, items: item.items, onActivate: this.props.onActivate }));
+                (item.depth >= 0 || item.depth === GROUP_DEPTH && this.props.options.collapseTagGroups) && item.items.length > 0 && external_react_["createElement"](ShelfIcon, { float: 'right', direction: item.expanded ? 'down' : 'right', color: 'white' }) || null),
+            !withoutChildren && item.items && item.items.length > 0 && external_react_["createElement"](MenuItems_MenuItems, { expanded: item.expanded, items: item.items, onActivate: this.props.onActivate, options: this.props.options }));
     };
     MenuItem = Object(external_tslib_["__decorate"])([
         external_mobx_react_["observer"]
@@ -13978,29 +14003,26 @@ var MenuItem_MenuItem = /** @class */ (function (_super) {
 var MenuItem_OperationMenuItemContent = /** @class */ (function (_super) {
     Object(external_tslib_["__extends"])(OperationMenuItemContent, _super);
     function OperationMenuItemContent() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.ref = external_react_["createRef"]();
-        return _this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
-    OperationMenuItemContent.prototype.componentDidUpdate = function () {
-        if (this.props.item.active && this.ref.current) {
-            this.ref.current.scrollIntoViewIfNeeded();
-        }
-    };
     OperationMenuItemContent.prototype.render = function () {
+        var _this = this;
         var item = this.props.item;
-        return external_react_["createElement"](MenuItemLabel, { depth: item.depth, active: item.active, deprecated: item.deprecated, ref: this.ref },
+        return external_react_["createElement"](MenuItemLabel, { depth: item.depth, active: item.active, deprecated: item.deprecated },
             external_react_["createElement"](OperationBadge, { type: item.httpVerb }, shortenHTTPVerb(item.httpVerb)),
             external_react_["createElement"](MenuItemTitle, { width: "calc(100% - 38px)" },
                 item.name,
-                this.props.children));
+                this.props.children),
+            this.props.options.canSaved && external_react_["createElement"](CloseIcon, { color: "error", handleClick: function () {
+                    var _a;
+                    (_a = _this.props.options) === null || _a === void 0 ? void 0 : _a.deleteItem(item);
+                } }));
     };
     OperationMenuItemContent = Object(external_tslib_["__decorate"])([
         external_mobx_react_["observer"]
     ], OperationMenuItemContent);
     return OperationMenuItemContent;
 }(external_react_["Component"]));
-
 
 // CONCATENATED MODULE: ./src/components/SideMenu/MenuItems.tsx
 
@@ -14015,11 +14037,11 @@ var MenuItems_MenuItems = /** @class */ (function (_super) {
     }
     MenuItems.prototype.render = function () {
         var _this = this;
-        var _a = this.props, items = _a.items, root = _a.root, className = _a.className;
+        var _a = this.props, items = _a.items, root = _a.root, className = _a.className, options = _a.options;
         var expanded = this.props.expanded == null ? true : this.props.expanded;
         return external_react_["createElement"](MenuItemUl, Object(external_tslib_["__assign"])({ className: className, style: this.props.style, expanded: expanded }, root ? {
             role: 'navigation'
-        } : {}), items.map(function (item, idx) { return external_react_["createElement"](MenuItem_MenuItem, { key: idx, item: item, onActivate: _this.props.onActivate }); }));
+        } : {}), items.map(function (item, idx) { return external_react_["createElement"](MenuItem_MenuItem, { key: idx, item: item, onActivate: _this.props.onActivate, options: options }); }));
     };
     MenuItems = Object(external_tslib_["__decorate"])([
         external_mobx_react_["observer"]
@@ -14041,6 +14063,7 @@ var SideMenu_SideMenu = /** @class */ (function (_super) {
     function SideMenu() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.activate = function (item) {
+            debugger;
             if (item && item.active && _this.context.menuToggle) {
                 return item.expanded ? item.collapse() : item.expand();
             }
@@ -14061,7 +14084,7 @@ var SideMenu_SideMenu = /** @class */ (function (_super) {
         return external_react_["createElement"](PerfectScrollbarWrap, { updateFn: this.saveScrollUpdate, className: this.props.className, options: {
                 wheelPropagation: false
             } },
-            external_react_["createElement"](MenuItems_MenuItems, { items: store.items, onActivate: this.activate, root: true }),
+            external_react_["createElement"](MenuItems_MenuItems, { items: store.items, onActivate: this.activate, root: true, options: this.props.menu.options }),
             external_react_["createElement"](RedocAttribution, null,
                 external_react_["createElement"]("a", { target: "_blank", rel: "noopener noreferrer", href: "https://github.com/Redocly/redoc" }, "Documentation Powered by ReDoc")));
     };
@@ -14355,7 +14378,7 @@ var SearchBox_SearchBox = /** @class */ (function (_super) {
                         active: {
                             value: idx === activeItemIdx
                         }
-                    }), onActivate: _this.props.onActivate, withoutChildren: true, key: res.item.id, "data-role": "search:result" }); }))));
+                    }), onActivate: _this.props.onActivate, withoutChildren: true, key: res.item.id, "data-role": "search:result", options: _this.props.options }); }))));
     };
     Object(external_tslib_["__decorate"])([
         external_decko_["bind"],
@@ -14400,7 +14423,7 @@ var Redoc_Redoc = /** @class */ (function (_super) {
                     external_react_["createElement"](RedocWrap, { className: "redoc-wrap" },
                         external_react_["createElement"](StickyResponsiveSidebar_StickyResponsiveSidebar, { menu: menu, className: "menu-content" },
                             external_react_["createElement"](ApiLogo_ApiLogo, { info: spec.info }),
-                            !options.disableSearch && external_react_["createElement"](SearchBox_SearchBox, { search: search, marker: marker, getItemById: menu.getItemById, onActivate: menu.activateAndScroll }) || null,
+                            !options.disableSearch && external_react_["createElement"](SearchBox_SearchBox, { search: search, marker: marker, getItemById: menu.getItemById, onActivate: menu.activateAndScroll, options: menu.options }) || null,
                             external_react_["createElement"](SideMenu_SideMenu, { menu: menu })),
                         external_react_["createElement"](ApiContentWrap, { className: "api-content" },
                             external_react_["createElement"](ApiInfo_ApiInfo, { store: store }),
