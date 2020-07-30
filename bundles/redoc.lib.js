@@ -7596,7 +7596,7 @@ var ErrorBoundary_ErrorBoundary = /** @class */ (function (_super) {
                 external_react_["createElement"]("br", null),
                 external_react_["createElement"]("small", null,
                     " Commit: ",
-                    "fdb5e4e7"));
+                    "35ee8949"));
         }
         return external_react_["Children"].only(this.props.children);
     };
@@ -10427,9 +10427,17 @@ var MenuStore_MenuStore = /** @class */ (function () {
         if (rewriteHistory === void 0) { rewriteHistory = false; }
         if ((this.activeItem && this.activeItem.id) === (item && item.id)) {
             return;
-        } // if (item && item.type === 'group') {
-        //   return;
-        // }
+        }
+        if (item && item.type === 'group') {
+            if (item.active) {
+                this.deactivate(this.activeItem);
+            }
+            else {
+                item.expand();
+                item.activate();
+            }
+            return;
+        }
         this.deactivate(this.activeItem);
         if (!item) {
             if (rewriteHistory) { }
@@ -12871,7 +12879,7 @@ function menuItemActiveBg(depth, _a) {
         return Object(external_polished_["darken"])(0.05, theme.sidebar.backgroundColor);
     }
     else if (depth === 0) {
-        return Object(external_polished_["darken"])(0.15, theme.sidebar.backgroundColor);
+        return '';
     }
     else {
         return '';
@@ -14063,14 +14071,12 @@ var SideMenu_SideMenu = /** @class */ (function (_super) {
     function SideMenu() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.activate = function (item) {
-            debugger;
             if (item && item.active && _this.context.menuToggle) {
                 return item.expanded ? item.collapse() : item.expand();
             }
             _this.props.menu.activateAndScroll(item, true);
             setTimeout(function () {
-                if (_this._updateScroll) {
-                    _this._updateScroll();
+                if (_this._updateScroll) { // this._updateScroll();
                 }
             });
         };
