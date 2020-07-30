@@ -101,12 +101,14 @@ class OperationMenuItemContent extends React.Component<OperationMenuItemContentP
           {item.name}
           {this.props.children}
         </MenuItemTitle>
-        <CloseIcon
-          color="warning"
-          handleClick={() => {
-            this.props.options?.deleteItem(item);
-          }}
-        />
+        {this.props.options.canSaved && (
+          <CloseIcon
+            color="error"
+            handleClick={() => {
+              this.props.options?.deleteItem(item);
+            }}
+          />
+        )}
       </MenuItemLabel>
     );
   }

@@ -15,7 +15,6 @@ class IntCloseIcon extends React.PureComponent<{
         className={this.props.className}
         style={this.props.style}
         onClick={this.props.handleClick}
-        color={this.props.color || ''}
         xmlns="http://www.w3.org/2000/svg"
         width="15"
         height="15"
@@ -32,6 +31,7 @@ export const CloseIcon = styled(IntCloseIcon)`
   width: ${props => props.size || '15px'};
   vertical-align: middle;
   float: ${props => props.float || ''};
+  fill: ${props => (props.color ? props.theme.colors[props.color].main : '')};
   transition: transform 0.2s ease-out;
 
   polygon {
