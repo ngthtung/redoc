@@ -68,7 +68,7 @@ function menuItemActiveBg(depth, { theme }: { theme: ResolvedThemeInterface }): 
   } else if (depth === 1) {
     return darken(0.05, theme.sidebar.backgroundColor);
   } else if (depth === 0) {
-    return darken(0.15, theme.sidebar.backgroundColor);
+    return '';
   } else {
     return '';
   }

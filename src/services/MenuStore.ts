@@ -209,9 +209,15 @@ export class MenuStore {
       return;
     }
 
-    // if (item && item.type === 'group') {
-    //   return;
-    // }
+    if (item && item.type === 'group') {
+      if (item.active) {
+        this.deactivate(this.activeItem);
+      } else {
+        item.expand();
+        item.activate();
+      }
+      return;
+    }
     this.deactivate(this.activeItem);
     if (!item) {
       if (rewriteHistory) {

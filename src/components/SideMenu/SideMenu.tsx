@@ -46,7 +46,7 @@ export class SideMenu extends React.Component<{ menu: MenuStore; className?: str
     this.props.menu.activateAndScroll(item, true);
     setTimeout(() => {
       if (this._updateScroll) {
-        this._updateScroll();
+        // this._updateScroll();
       }
     });
   };
