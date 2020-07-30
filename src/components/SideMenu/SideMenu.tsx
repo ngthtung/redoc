@@ -39,7 +39,6 @@ export class SideMenu extends React.Component<{ menu: MenuStore; className?: str
   }
 
   activate = (item: IMenuItem) => {
-    debugger;
     if (item && item.active && this.context.menuToggle) {
       return item.expanded ? item.collapse() : item.expand();
     }
